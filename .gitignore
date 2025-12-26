@@ -18,3 +18,9 @@
 **/Secrets.cs
 # Ignore builds
 IOS/
+
+# --- ADDITIONAL SECRETS ---
+**/*Secrets*.cs
+.env
+.env.*
+appsettings*.json

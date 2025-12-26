@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "name": "Claw Hammer",
+    "cost": 15.99,
+    "in_stock": true
+  },
+  {
+    "id": 2,
+    "name": "Box of Nails (100ct)",
+    "cost": 8.50,
+    "in_stock": true
+  },
+  {
+    "id": 3,
+    "name": "Tape Measure (25ft)",
+    "cost": 12.00,
+    "in_stock": false
+  },
+  {
+    "id": 4,
+    "name": "Spirit Level",
+    "cost": 22.45,
+    "in_stock": true
+  },
+  {
+    "id": 5,
+    "name": "Power Drill",
+    "cost": 89.99,
+    "in_stock": true
+  },
+  {
+    "id": 6,
+    "name": "Safety Goggles",
+    "cost": 5.25,
+    "in_stock": true
+  },
+  {
+    "id": 7,
+    "name": "Hard Hat",
+    "cost": 18.00,
+    "in_stock": true
+  },
+  {
+    "id": 8,
+    "name": "Utility Knife",
+    "cost": 7.50,
+    "in_stock": false
+  },
+  {
+    "id": 9,
+    "name": "Work Gloves (Leather)",
+    "cost": 14.95,
+    "in_stock": true
+  },
+  {
+    "id": 10,
+    "name": "Screwdriver Set (6-Piece)",
+    "cost": 19.99,
+    "in_stock": true
+  }
+]

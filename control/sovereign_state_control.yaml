@@ -1,0 +1,166 @@
+project:
+  name: "Sovereign State"
+  working_title: true
+  genre: ["Asynchronous MMO", "Hardcore Economic Simulation", "Region Builder"]
+  core_hook: "Meta-Universe: isolated worlds, shared market"
+
+north_star:
+  statement: >
+    Build a deterministic tick-based economic engine where resources are physicalized
+    commodities traced through a ledger, and the player progresses from AI dependency
+    to market displacement via the global exchange.
+
+non_negotiables:
+  - "Engine runs without Unity (pure C# assemblies)"
+  - "Tick-based simulation; no real-time physics dependencies"
+  - "Ledger is source of truth for resource + money"
+  - "All economy physics injected via external JSON mods"
+  - "Universes are visually isolated; only market signals cross universes"
+
+units_and_precision:
+  money: { type: "int64", unit: "cents" }
+  power: { type: "int64", unit: "Wh" }
+  distance: { type: "int32", unit: "meters" }
+  tick: { type: "int64", unit: "index", default_hours_per_tick: 1 }
+
+verticals:
+  - name: "Power"
+    status: "IN_PROGRESS"
+    mvp_scope:
+      producers: ["NuclearPlant"]
+      consumers: ["House"]
+      transport:
+        model: "distance_scalar"
+        loss: "distance-based"
+        fee: "kWh*distance"
+      market_layers: ["AI_Global_Market", "Global_Exchange"]
+      settlement: ["House pays supplier", "Imports incur transport fee"]
+
+simulation_pipeline:
+  tick_phases:
+    - "TickStart"
+    - "UpdateProducers"
+    - "CollectRequests"
+    - "ResolveSupply(Local->Exchange->AI)"
+    - "ApplyDeliveries(loss, fees)"
+    - "SettlePayments"
+    - "UpdatePlotStateMachines"
+    - "PublishExchangeOffers"
+    - "TickEnd"
+
+modules:
+  engine:
+    Sovereign.Core:
+      responsibilities:
+        - "Strong types: MoneyCents, EnergyWh, TickIndex, IDs"
+        - "Common enums, interfaces, error types"
+    Sovereign.Sim:
+      responsibilities:
+        - "Universe container + tick runner"
+        - "Command processing and snapshot generation"
+    Sovereign.Economy:
+      responsibilities:
+        - "Ledger + accounts"
+        - "Pricing + order resolution"
+        - "Supply/demand aggregation metrics"
+    Sovereign.Mods:
+      responsibilities:
+        - "Load/validate JSON: government styles, buildings"
+        - "Schema versioning"
+    Sovereign.Serialization:
+      responsibilities:
+        - "Save/load universe state deterministically"
+    Sovereign.Tests:
+      responsibilities:
+        - "Unit tests and scenario tests"
+  unity:
+    responsibilities:
+      - "Map rendering and plot UI"
+      - "Tick controls + dashboards"
+      - "Mod file discovery (StreamingAssets)"
+      - "Engine snapshot presentation layer"
+
+interfaces:
+  commands:
+    - name: "ZonePlot"
+      args: ["plotId", "buildingTypeId"]
+    - name: "BuildFacility"
+      args: ["plotId", "facilityTypeId"]
+    - name: "ListOffer"
+      args: ["resourceType", "qtyWh", "unitPriceCentsPerKwh"]
+  snapshots:
+    - name: "UniverseSnapshot"
+      fields:
+        - "tick"
+        - "treasuryCents"
+        - "plots[]: {plotId, state, demandWh, deliveredWh, stability}"
+        - "power: {producedWh, consumedWh, importedWh, exportedWh, avgUnitCost}"
+        - "market: {aiSharePct, playerSharePct, offersCount}"
+
+invariants:
+  ledger:
+    - "No negative money in any account unless explicitly allowed by policy"
+    - "Total power produced - losses - consumed - exports + imports = delta(inventory)"
+    - "Every delivery creates matching ledger entries for resource and money"
+  market:
+    - "Offer matching prefers lowest total delivered cost (price + transport + loss)"
+    - "AI offer always available for Power at premium price"
+  plots:
+    - "Unserved critical demand reduces stability"
+    - "Stability thresholds drive Slum/Abandoned transitions deterministically"
+
+milestones:
+  - id: "M0"
+    name: "Engine scaffolding + Unity harness"
+    exit_criteria:
+      - "Unity can step ticks and show treasury + tick count"
+      - "Mods load from JSON without manual code edits"
+      - "Engine unit tests run in CI or local script"
+  - id: "M1"
+    name: "Ledger + Orders + Plot State Machine"
+    exit_criteria:
+      - "Plot requests power; AI supplies if no local supply"
+      - "Plot transitions states based on delivered power"
+      - "Ledger reconciles per tick"
+  - id: "M2"
+    name: "Power vertical end-to-end"
+    exit_criteria:
+      - "Nuclear plant produces; houses consume; plant gets paid"
+      - "Distance-based loss and transport fees affect total delivered cost"
+      - "Blackouts cause decay; recovery reverses decay if served"
+  - id: "M3"
+    name: "Global Exchange displacement"
+    exit_criteria:
+      - "Universe A lists surplus; Universe B imports from A if cheaper than AI"
+      - "AI share metric decreases when player offers exist"
+  - id: "M4"
+    name: "Government style injection"
+    exit_criteria:
+      - "Government settings alter UBI/taxes/tariffs/build costs via JSON"
+      - "No code changes required to rebalance"
+
+tests:
+  unit:
+    - "Ledger_Reconciles_PerTick"
+    - "Resolver_Selects_Cheapest_Offer"
+    - "Plot_Decay_On_Unserved_Demand"
+    - "Exchange_Matching_Respects_Qty_And_Price"
+    - "Government_Modifiers_Apply_Correctly"
+  scenarios:
+    - name: "DependencyEra_AIOnly"
+      asserts:
+        - "AI supplies 100% of power initially"
+        - "Treasury decreases due to high import prices"
+    - name: "ImportSubstitution_LocalPlant"
+      asserts:
+        - "Local supply share > 80% after plant built"
+        - "Avg unit cost decreases vs AI-only"
+    - name: "ExportTycoon_Displacement"
+      asserts:
+        - "Universe B imports from player offer if cheaper"
+        - "AI share drops in Universe B"
+
+work_rules:
+  - "No feature enters Unity unless engine tests exist for its logic"
+  - "Every new resource vertical must reuse: ledger, orders, resolver, delivery, settlement"
+  - "If UI cannot explain a failure, the feature is not complete"
