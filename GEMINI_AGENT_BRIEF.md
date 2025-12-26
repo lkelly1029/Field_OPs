@@ -1,91 +1,202 @@
 # GEMINI_AGENT_BRIEF.md
-Generated: 2025-12-26 03:03
+Single Entry Point for AI Build Review & Coordination
 
-## Purpose
-This file is the single entry point for the Gemini VS Code assistant.
+Generated: 2025-12-25
 
-When you open this file and ask Gemini to follow it, Gemini must:
-1) Read the **Sources of Truth** listed below (in order).
-2) Scan the repository to compare **what exists** vs **what the docs require**.
-3) Produce the **next steps** to reach the current milestone (Power Vertical MVP).
-4) Update `STATUS.md` with the current factual state and next steps.
 
-## Repository Root (Windows)
-`C:\Users\trulu\Field_OPs`
+================================================================
+PURPOSE (AUTHORITATIVE)
+================================================================
 
-## Sources of Truth (READ FIRST, IN THIS ORDER)
-1. `control/sovereign_state_control.yaml`
-2. `control/SovereignState_Build_Reference.md`
-3. `control/SovereignState_Unity_Placement_Reference.md`
-4. `control/SovereignState_Dev_Onboarding_Checklist.md`
-5. `control/SovereignState_First_Vertical_Replication_Guide.md`
-6. `README.md` (root)
+This file is the ONLY instruction Gemini should follow when
+working in this repository.
 
-## Operating Rules (NON-NEGOTIABLE)
-- Do NOT invent files, folders, or systems that do not exist.
-- If a required item is missing, explicitly mark it as **MISSING** and propose:
+When instructed to follow this brief, Gemini MUST:
+
+1. Read the Sources of Truth (in order).
+2. Scan the repository filesystem and code.
+3. Compare what EXISTS vs what is REQUIRED.
+4. Determine the next concrete steps toward the current milestone.
+5. Update STATUS.md with the current factual state.
+
+No other behavior is permitted.
+
+
+================================================================
+REPOSITORY ROOT (AUTHORITATIVE)
+================================================================
+
+Windows path:
+
+C:\Users\trulu\Field_OPs
+
+All paths referenced below are RELATIVE to this root.
+
+
+================================================================
+SOURCES OF TRUTH (READ FIRST, IN ORDER)
+================================================================
+
+These define architecture and rules. Do NOT contradict them.
+
+1. control/sovereign_state_control.yaml
+2. control/SovereignState_Build_Reference.md
+3. control/SovereignState_Unity_Placement_Reference.md
+4. control/SovereignState_Dev_Onboarding_Checklist.md
+5. control/SovereignState_First_Vertical_Replication_Guide.md
+6. README.md (repo root)
+
+
+================================================================
+OPERATING RULES (NON-NEGOTIABLE)
+================================================================
+
+1. NO INVENTION
+- Do NOT invent files, folders, systems, or architecture.
+- If a required item is missing, mark it as MISSING and propose:
   - exact file path
-  - minimal contents needed
-  - why it is required
-- Unity is **presentation only**:
-  - Unity code may NOT contain simulation, pricing, ledger math, or tick progression logic.
-- Engine is **headless**:
-  - Engine code may NOT reference `UnityEngine` or `UnityEditor`.
-- Protect secrets:
-  - Never print or request secret values.
-  - Do not move or delete `Secrets.*` files.
-- Do NOT touch `.github/**` unless explicitly requested by the user.
+  - minimal contents
+  - reason it is required
 
-## Output Requirements (Single Response)
-Gemini must produce, in this order:
+2. STRICT LAYER SEPARATION
+- Unity (Assets/**):
+  - Presentation only
+  - NO simulation logic
+  - NO ledger, pricing, or tick math
+- Engine (engine/**):
+  - Headless only
+  - NO UnityEngine or UnityEditor references
+- Control (control/**):
+  - Design truth, schemas, guardrails, documentation
 
-### A) Findings (Factual Inventory)
-- List what exists vs missing, grouped by:
-  - Control layer (`control/**`)
-  - Engine layer (`engine/**`)
-  - Unity layer (`Assets/**`)
-  - CI/guardrails (`control/tools/**`, `.github/**`)
+3. SECURITY & SECRETS
+- Never print, request, or move secret values
+- Do NOT touch:
+  - .github/**
+  - Assets/_Scripts/SupabaseManager.cs
+  - Assets/_Scripts/ConstructionMaterial.cs
+- Do NOT delete or move Secrets.* files
+- Secrets must remain git-ignored
 
-### B) Next Steps (Prioritized)
-- Provide 5–12 steps.
-- Each step must include:
-  - the exact file(s) to edit/create
-  - the intended change
+
+================================================================
+FILESYSTEM ENFORCEMENT (MANDATORY)
+================================================================
+
+This section is STRICTLY ENFORCED.
+
+HARD RULES:
+- Every file MUST be created in its correct directory
+- Repo root is NOT a default dumping ground
+- If a directory does not exist, CREATE IT FIRST
+- If unsure of the correct path, STOP AND ASK
+
+------------------------------------------------
+CANONICAL PATHS (AUTHORITATIVE)
+------------------------------------------------
+
+ROOT-ONLY FILES (ONLY THESE MAY LIVE AT ROOT):
+- README.md
+- STATUS.md
+- run_guardrails.ps1
+
+CONTROL LAYER:
+control/
+  sovereign_state_control.yaml
+  tools/
+    validate_control.py
+    validate_repo_guardrails.py
+  *.md   (design, onboarding, references)
+
+ENGINE LAYER:
+engine/
+  src/
+  scenarios/
+    PowerAcceptance.cs
+  tests/
+
+UNITY LAYER:
+Assets/
+  Scripts/
+    SimBridge/
+    DevTools/
+  Scenes/
+  Settings/
+
+If Gemini creates a file:
+- It MUST announce the full path first
+- It MUST match one of the above categories
+
+
+================================================================
+REQUIRED REPOSITORY SCAN TASKS
+================================================================
+
+Gemini MUST verify the following:
+
+1. GUARDRAILS
+- control/tools/validate_control.py
+- control/tools/validate_repo_guardrails.py
+- run_guardrails.ps1
+
+2. UNITY DEV CONSOLE
+- Assets/Scripts/SimBridge/ISimDebugProvider.cs
+- Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs
+- Determine whether the provider is wired into a runner or scene
+
+3. ENGINE SCENARIOS
+- engine/**/PowerAcceptance.cs
+- Determine whether it is scaffold-only or implemented
+
+4. CONTROL ALIGNMENT
+- control/sovereign_state_control.yaml matches documentation
+
+
+================================================================
+OUTPUT REQUIREMENTS (SINGLE RESPONSE)
+================================================================
+
+Gemini MUST output, IN THIS ORDER:
+
+A) FINDINGS (FACTUAL INVENTORY)
+- Grouped by:
+  - Control layer
+  - Engine layer
+  - Unity layer
+  - CI / Guardrails
+- State only: EXISTS / MISSING / PARTIAL
+
+B) NEXT STEPS (PRIORITIZED)
+- Provide 5–12 steps
+- Each step MUST include:
+  - exact file path(s)
+  - what to implement or change
   - acceptance condition (“done when …”)
 
-### C) Update `STATUS.md`
-- Create `STATUS.md` if missing, otherwise update it.
-- Keep the update factual and concise.
-- Do not rewrite history; just reflect current state and next actions.
+C) STATUS.md UPDATE
+- Create STATUS.md if missing
+- Otherwise, update it
+- Keep changes factual and concise
+- Do NOT rewrite history
 
-## Required Repo Scan Tasks
-Perform these checks while scanning:
+IN THIS RUN, GEMINI MAY ONLY EDIT:
+- STATUS.md
 
-1) Guardrails presence
-- Confirm:
-  - `control/tools/validate_control.py`
-  - `control/tools/validate_repo_guardrails.py`
-  - `run_guardrails.ps1`
+All other changes must be PROPOSED, not applied.
 
-2) Unity Dev Console presence
-- Confirm:
-  - `Assets/Scripts/SimBridge/ISimDebugProvider.cs`
-  - `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs`
-- Determine whether the debug provider is wired in any scene/runner.
+ABSOLUTE PROHIBITION:
+- No .cs files may exist at repo root.
+- Any engine-domain class MUST live under engine/src/**.
+- If Gemini creates a .cs file at root, that is a failure.
 
-3) Engine Scenario presence
-- Confirm:
-  - `engine/**/PowerAcceptance.cs` (or equivalent)
-- Determine if it is scaffold-only or fully implemented.
+================================================================
+END CONDITION
+================================================================
 
-4) Control file alignment
-- Confirm that `control/sovereign_state_control.yaml` matches the structure described in docs.
+The task is complete ONLY when:
+- Findings are delivered
+- Next steps are listed
+- STATUS.md is updated accurately
 
-## Write Permissions
-- In this run, Gemini may edit/create:
-  - `STATUS.md`
-- Gemini may propose other edits but must NOT apply them unless asked.
-
-## End Condition
-The run is complete only when:
-- A, B, and C are delivered, and `STATUS.md` is updated.
+If any rule conflicts with speed or convenience:
+THE RULE WINS.

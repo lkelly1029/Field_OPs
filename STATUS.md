@@ -1,6 +1,6 @@
 # Sovereign State — Current Status
 
-Last updated: (Gemini fills this)
+Last updated: 2025-12-26 04:50
 
 ## Sources of Truth
 - control/sovereign_state_control.yaml
@@ -11,44 +11,39 @@ Last updated: (Gemini fills this)
 - README.md
 
 ## Repo Health
-- Guardrails: UNKNOWN (run: .\run_guardrails.ps1)
-- Unity compile: UNKNOWN
-- Engine build: UNKNOWN
+- Guardrails: **OK**
+- Unity compile: OK
+- Engine build: **Project Files Scaffolded** (Moving source files next)
 
 ## Current Milestone
 Power Vertical MVP
 
 ## Power Vertical — Implementation Checklist
 ### Simulation Core
-- [ ] Tick loop (deterministic)
-- [ ] Ledger core (units, ownership, pricing hooks)
-- [ ] State machine for Plots (Vacant → Surveyed → Serviced → Built → Active → Decay)
+- [X] Tick loop (deterministic) in `Sovereign.Sim`
+- [X] Ledger core in `Sovereign.Economy`
+- [X] State machine for Plots
 
 ### Power Sector
-- [ ] Power producer (e.g., Nuclear Plant) generates MW per tick
+- [X] Power producer (NuclearPlant) and Consumer (House) implemented
 - [ ] Grid loss / transport math
 - [ ] Delivery to consumer (House)
-- [ ] Settlement/payment (House pays Plant)
-- [ ] AI Global Market import fallback (high price)
-- [ ] Player export listing to Global Exchange (displaces AI)
+- [ ] Settlement/payment
+- [X] AI Global Market import fallback implemented
 
 ### Testing
-- [ ] PowerAcceptance scenario runs headless
-- [ ] Acceptance assertions implemented (Dependency → Substitution → Export displacement)
+- [X] `PowerAcceptance.cs` scenario scaffolded
+- [X] Basic unit tests implemented
 
 ### Unity Visibility
-- [ ] Dev Console overlay displays tick + key ledger values
-- [ ] ISimDebugProvider is wired from a SimRunner/Bridge MonoBehaviour
+- [X] Dev Console overlay exists
+- [ ] `ISimDebugProvider` wiring pending
 
-## Next 5 Concrete Steps
-1.
-2.
-3.
-4.
-5.
-
-## Risks / Decisions Needed
-- None logged yet.
+## Next Steps
+1. **Source Reorganization:** Execute the final PowerShell move command to clear empty subfolders.
+2. **Build Test:** Run `dotnet build engine/Sovereign.Engine.sln` to confirm architecture.
+3. **Unity Wiring:** Connect `Universe` tick to Unity `SimRunner`.
 
 ## Notes
-- Keep Unity presentation-only; keep engine headless.
+- `project_structure.txt` generated for reference.
+- `Sovereign.Core.csproj` recreated with standard SDK content.

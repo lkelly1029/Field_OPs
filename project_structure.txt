@@ -1,0 +1,82 @@
+Field_OPs Repository Structure
+================================
+
+.
+|-- .gitignore
+|-- Assembly-CSharp-Editor.csproj
+|-- Assembly-CSharp.csproj
+|-- Field_OPs.slnx
+|-- GEMINI_AGENT_BRIEF.md
+|-- GEMINI_VSCODE_HOW_TO.md
+|-- project_structure.txt
+|-- README.md
+|-- run_guardrails.ps1
+|-- STATUS.md
+|
+|-- control/
+|   |-- sovereign_state_control.yaml
+|   |-- SovereignState_Build_Reference.md
+|   |-- SovereignState_Dev_Onboarding_Checklist.md
+|   |-- SovereignState_First_Vertical_Replication_Guide.md
+|   |-- SovereignState_Unity_Placement_Reference.md
+|   `-- tools/
+|       |-- validate_control.py
+|       |-- validate_no_root_cs.py
+|       `-- validate_repo_guardrails.py
+|
+|-- engine/
+|   |-- Sovereign.Engine.sln
+|   `-- src/
+|       |-- Sovereign.Core/
+|       |   |-- EnergyWh.cs
+|       |   |-- IConsumer.cs
+|       |   |-- IProducer.cs
+|       |   |-- MoneyCents.cs
+|       |   |-- Sovereign.Core.csproj
+|       |   `-- TickIndex.cs
+|       |-- Sovereign.Economy/
+|       |   |-- GlobalExchange.cs
+|       |   |-- Ledger.cs
+|       |   `-- Sovereign.Economy.csproj
+|       |-- Sovereign.Scenarios/
+|       |   `-- PowerAcceptance.cs
+|       |-- Sovereign.Sim/
+|       |   |-- House.cs
+|       |   |-- NuclearPlant.cs
+|       |   |-- Plot.cs
+|       |   |-- Sovereign.Sim.csproj
+|       |   `-- Universe.cs
+|       `-- Sovereign.Tests/
+|           `-- Sovereign.Tests.csproj
+|
+|-- Assets/
+|   |-- _Legacy/
+|   |   |-- _Recovery/
+|   |   |-- _Testing/
+|   |   `-- SovereignState_Nested/
+|   |-- _Scripts/
+|   |   |-- ConstructionMaterial.cs
+|   |   |-- Secrets.cs
+|   |   `-- SupabaseManager.cs
+|   |-- Scripts/
+|   |   |-- DevTools/
+|   |   |   `-- SovereignDevConsoleOverlay.cs
+|   |   `-- SimBridge/
+|   |       `-- ISimDebugProvider.cs
+|   |-- Scenes/
+|   |   `-- SampleScene.unity
+|   |-- Settings/
+|   |-- TutorialInfo/
+|   |-- InputSystem_Actions.inputactions
+|   |-- NuGet.config
+|   `-- packages.config
+|
+|-- Packages/
+|   |-- manifest.json
+|   `-- packages-lock.json
+|
+`-- ProjectSettings/
+    |-- EditorBuildSettings.asset
+    |-- ProjectSettings.asset
+    |-- ProjectVersion.txt
+    `-- (and other Unity settings files...)
