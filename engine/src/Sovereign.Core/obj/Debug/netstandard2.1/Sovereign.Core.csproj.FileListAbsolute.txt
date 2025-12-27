@@ -1,0 +1,10 @@
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.AssemblyInfoInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.AssemblyInfo.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.csproj.CoreCompileInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.sourcelink.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\bin\Debug\netstandard2.1\Sovereign.Core.deps.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\bin\Debug\netstandard2.1\Sovereign.Core.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\bin\Debug\netstandard2.1\Sovereign.Core.pdb
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.pdb

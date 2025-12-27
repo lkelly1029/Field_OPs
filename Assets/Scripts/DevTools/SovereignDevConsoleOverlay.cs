@@ -101,6 +101,13 @@ namespace SovereignState.Unity.DevTools
                 {
                     DrawResourceBar(kvp.Key, kvp.Value);
                 }
+                else if (kvp.Key.Contains("Price") || kvp.Key.Contains("Share"))
+                {
+                    // These are handled within the DrawResourceBar logic if needed, 
+                    // or just displayed as labels here. 
+                    // For now, let's keep them as labels but with some styling.
+                    GUILayout.Label($"   <color=grey>{kvp.Key}: {kvp.Value}</color>");
+                }
                 else
                 {
                     GUILayout.Label($"{kvp.Key}: {kvp.Value}");

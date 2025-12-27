@@ -1,0 +1,14 @@
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.csproj.AssemblyReference.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.AssemblyInfoInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.AssemblyInfo.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.csproj.CoreCompileInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.sourcelink.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Economy.deps.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Economy.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Economy.pdb
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Core.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Core.pdb
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereig.C598A267.Up2Date
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.pdb

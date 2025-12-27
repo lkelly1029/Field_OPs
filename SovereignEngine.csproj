@@ -48,25 +48,33 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="engine\src\Sovereign.Core\Commands\BuildCommand.cs" />
     <Compile Include="engine\src\Sovereign.Core\TickIndex.cs" />
     <Compile Include="engine\src\simulation\TickIndex.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\Farm.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\NuclearPlant.cs" />
+    <Compile Include="engine\src\Sovereign.Tests\LedgerTests.cs" />
     <Compile Include="engine\src\economy\value_objects\MoneyCents.cs" />
+    <Compile Include="engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.AssemblyInfo.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\WaterPump.cs" />
     <Compile Include="engine\src\Sovereign.Sim\IProducer.cs" />
+    <Compile Include="engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.AssemblyInfo.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Plot.cs" />
     <Compile Include="engine\src\Sovereign.Core\ResourceType.cs" />
     <Compile Include="engine\src\Sovereign.Core\MoneyCents.cs" />
     <Compile Include="engine\src\world\Plot.cs" />
-    <Compile Include="engine\src\Sovereign.Core\Commands\ICommand.cs" />
+    <Compile Include="engine\src\Sovereign.Tests\PlotDecayTests.cs" />
+    <Compile Include="engine\src\Sovereign.Mods\ModLoader.cs" />
+    <Compile Include="engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.AssemblyInfo.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Commands\ICommand.cs" />
     <Compile Include="engine\src\Sovereign.Core\EnergyWh.cs" />
     <Compile Include="engine\src\Sovereign.Economy\GlobalExchange.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Serialization\UniverseSerializer.cs" />
     <Compile Include="engine\src\contracts\IConsumer.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\obj\Debug\netstandard2.1\Sovereign.Sim.AssemblyInfo.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Universe.cs" />
     <Compile Include="engine\src\consumers\House.cs" />
+    <Compile Include="engine\src\Sovereign.Mods\GovernmentMod.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Commands\BuildCommand.cs" />
     <Compile Include="engine\src\contracts\IProducer.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\SteelMill.cs" />
     <Compile Include="engine\src\Sovereign.Economy\MarketSnapshot.cs" />
@@ -75,14 +83,126 @@
     <Compile Include="engine\src\Sovereign.Sim\Buildings\House.cs" />
     <Compile Include="engine\src\economy\value_objects\EnergyWh.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\IronMine.cs" />
+    <Compile Include="engine\src\Sovereign.Tests\obj\Debug\net8.0\Sovereign.Tests.AssemblyInfo.cs" />
     <Compile Include="engine\src\world\Universe.cs" />
     <Compile Include="engine\src\Sovereign.Core\ResourceDefinition.cs" />
     <Compile Include="engine\src\Sovereign.Economy\Ledger.cs" />
     <Compile Include="engine\src\power\NuclearPlant.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ja\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\it\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Economy.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.Utilities.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\es\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Mods\obj\Debug\net8.0\Sovereign.Mods.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.assert.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hans\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
     <None Include="engine\src\LEGACY_CLEANUP_NOTICE.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\testhost.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.TestPlatform.Common.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CoreUtilities.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\es\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hans\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CommunicationUtilities.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\de\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ja\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\fr\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\obj\Debug\net8.0\refint\Sovereign.Tests.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\tr\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Core.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pl\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Mods.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\fr\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\cs\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Sim.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\de\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Mods.dll" />
+    <None Include="engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.dll" />
+    <None Include="engine\src\Sovereign.Tests\obj\Debug\net8.0\ref\Sovereign.Tests.dll" />
     <None Include="engine\src\SovereignEngine.asmdef" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.execution.dotnet.dll" />
+    <None Include="engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Core.dll" />
+    <None Include="engine\src\Sovereign.Tests\obj\Debug\net8.0\Sovereign.Tests.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hans\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pl\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pl\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CrossPlatEngine.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.abstractions.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\cs\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Economy.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\es\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\fr\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\it\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\it\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\es\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Mods.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\de\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Core.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\fr\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\de\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\de\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Newtonsoft.Json.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\it\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\it\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Sim.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ja\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\tr\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ja\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\obj\Debug\net8.0\Sovereign.Tests.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hans\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pl\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Economy\obj\Debug\netstandard2.1\Sovereign.Economy.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Tests.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.PlatformAbstractions.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.core.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\tr\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\NuGet.Frameworks.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\cs\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\tr\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\es\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\obj\Debug\net6.0\Sovereign.Tests.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\cs\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hans\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\pl\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Economy.dll" />
+    <None Include="engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.dll" />
+    <None Include="engine\src\Sovereign.Core\bin\Debug\netstandard2.1\Sovereign.Core.dll" />
+    <None Include="engine\src\Sovereign.Sim\obj\Debug\netstandard2.1\Sovereign.Sim.dll" />
+    <None Include="engine\src\Sovereign.Sim\obj\Debug\netstandard2.1\Sovereign.Sim.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.csproj.FileListAbsolute.txt" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\tr\Microsoft.TestPlatform.CoreUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\fr\Microsoft.TestPlatform.CommunicationUtilities.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.TestPlatform.CrossPlatEngine.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\ja\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\zh-Hant\Microsoft.VisualStudio.TestPlatform.Common.resources.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll" />
+    <None Include="engine\src\Sovereign.Tests\bin\Debug\net8.0\cs\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll" />
+    <None Include="engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Core.dll" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.IdentityModel.JsonWebTokens">
@@ -231,6 +351,114 @@
     </Reference>
     <Reference Include="Supabase.Storage">
       <HintPath>Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0\Supabase.Storage.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sovereign.Core">
+      <HintPath>engine\src\Sovereign.Core\obj\Debug\netstandard2.1\Sovereign.Core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.TestPlatform.ObjectModel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.execution.dotnet">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.execution.dotnet.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CrossPlatEngine.resources">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\pt-BR\Microsoft.TestPlatform.CrossPlatEngine.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.assert">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.assert.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CoreUtilities.resources">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.TestPlatform.CoreUtilities.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.ObjectModel.resources">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.VisualStudio.TestPlatform.ObjectModel.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="testhost">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\testhost.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.Common.resources">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\ko\Microsoft.VisualStudio.TestPlatform.Common.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sovereign.Sim">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Sovereign.Sim.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CommunicationUtilities.resources">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\ru\Microsoft.TestPlatform.CommunicationUtilities.resources.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CommunicationUtilities">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CommunicationUtilities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.core">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NuGet.Frameworks">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\NuGet.Frameworks.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sovereign.Economy">
+      <HintPath>engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Economy.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sovereign.Mods">
+      <HintPath>engine\src\Sovereign.Sim\bin\Debug\netstandard2.1\Sovereign.Mods.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.PlatformAbstractions">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.PlatformAbstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.CodeCoverage.Shim">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.CodeCoverage.Shim.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sovereign.Tests">
+      <HintPath>engine\src\Sovereign.Tests\obj\Debug\net8.0\ref\Sovereign.Tests.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.abstractions">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.abstractions.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.TestPlatform.Common">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.VisualStudio.TestPlatform.Common.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CoreUtilities">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CoreUtilities.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.runner.visualstudio.dotnetcore.testadapter">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.visualstudio.dotnetcore.testadapter.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.runner.utility.netcoreapp10">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.utility.netcoreapp10.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="xunit.runner.reporters.netcoreapp10">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\xunit.runner.reporters.netcoreapp10.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.CrossPlatEngine">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.CrossPlatEngine.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.TestPlatform.Utilities">
+      <HintPath>engine\src\Sovereign.Tests\bin\Debug\net8.0\Microsoft.TestPlatform.Utilities.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="UnityEditor.iOS.Extensions.Xcode">

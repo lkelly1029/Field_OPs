@@ -1,0 +1,14 @@
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.csproj.AssemblyReference.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.AssemblyInfoInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.AssemblyInfo.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.csproj.CoreCompileInputs.cache
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.sourcelink.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Mods.deps.json
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Mods.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Mods.pdb
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Core.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Core.pdb
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereig.251D3755.Up2Date
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.dll
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\obj\Debug\netstandard2.1\Sovereign.Mods.pdb

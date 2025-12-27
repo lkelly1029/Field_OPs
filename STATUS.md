@@ -8,52 +8,36 @@
 - **Alignment**: Control file matches Brief requirements [EXISTS]
 
 ### Engine Layer
-- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim` projects [EXISTS]
-- **Scenarios**: `engine/src/Sovereign.Scenarios/PowerAcceptance.cs` [EXISTS - Implemented]
-- **Tests**: `Sovereign.Tests` project [EXISTS]
-- **Legacy Artifacts**: `engine/src/` legacy folders cleanup script executed. [RESOLVED]
-- **Universe.Tick**: Implements Money/Market (Macro) and Plot-level state updates. [COMPLETE]
+- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim`, `Sovereign.Mods` projects [EXISTS]
+- **Build Automation**: `engine/tools/build_engine.ps1` successfully deploys DLLs to Unity. [COMPLETE]
+- **Architecture**: Circular dependencies resolved; projects target `netstandard2.1`. [CLEAN]
 
 ### Unity Layer
-- **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [EXISTS]
-- **Sim Bridge Interface**: `Assets/Scripts/SimBridge/ISimDebugProvider.cs` [EXISTS]
-- **Sim Bridge Implementation**: `Assets/Scripts/SimBridge/SimulationRunner.cs` [EXISTS]
-- **Scene**: `Assets/Scenes/SampleScene.unity` [EXISTS]
+- **Consolidation**: `Assets/_Scripts` removed. All active scripts moved to `Assets/Scripts/`. [COMPLETE]
+- **Integrations**: Supabase and Secrets correctly placed in `Assets/Scripts/Integrations/Supabase/`. [COMPLETE]
+- **Plugins**: `Assets/Plugins/SovereignEngine/` populated with engine DLLs. [COMPLETE]
+- **Visual KPIs**: `SovereignDevConsoleOverlay.cs` and `SimulationRunner.cs` updated to show detailed market metrics. [COMPLETE]
+- **Fixes**: Removed `SovereignEngine` reference from `SovereignState.Unity.asmdef` to fix duplicate type errors. [COMPLETE]
 
 ### CI / Guardrails
-- **Scripts**: `validate_control.py`, `validate_repo_guardrails.py`, `run_guardrails.ps1` [EXISTS]
+- **Placement Contract**: `python control\tools\validate_no_root_cs.py` PASSES. [SUCCESS]
+- **Overall**: `run_guardrails.ps1` verified. [GREEN]
 
 ## 2. Next Steps (Prioritized)
 
-1.  **Implement Save/Load in Unity**
-    -   **Path**: `Assets/Scripts/SimBridge/SimulationRunner.cs`
-    -   **Task**: Uncomment and finalize the `SaveGame` and `LoadGame` methods using `UniverseSerializer`.
-    -   **Condition**: Can save state to JSON and reload it.
-    -   **Status**: COMPLETE
+1.  **Unity Scene Verification**
+    -   **Task**: Verify duplicate type errors are gone.
+    -   **Goal**: Confirm "headless" engine runs within the Unity environment using ONLY the DLLs.
 
-2.  **Implement Government Modifiers (M4)**
-    -   **Path**: `engine/src/Sovereign.Mods/GovernmentMod.cs` (New)
-    -   **Task**: Create structure to load government policies (tax rates, UBI) from JSON.
-    -   **Condition**: Engine can load a policy file.
-    -   **Status**: COMPLETE
+2.  **Persistence Finalization**
+    -   **Task**: Verify `SaveGame` and `LoadGame` functionality with the new engine projects.
+    -   **Goal**: Ensure state can be carried across sessions.
 
 ## 3. Recent Activity (Agent Maintenance)
-- **Repo Hygiene**:
-  - Moved `GovernmentMod.cs`, `ModLoader.cs`, `Sovereign.Mods.csproj` to `engine/src/Sovereign.Mods/`.
-  - Moved `LedgerTests.cs`, `PlotDecayTests.cs` to `engine/src/Sovereign.Tests/`.
-  - Moved `Assets/_Scripts/SupabaseManager.cs`, `Assets/_Scripts/ConstructionMaterial.cs` to `Assets/Scripts/Integrations/Supabase/`.
-  - **BLOCKED**: Could not delete original files due to shell restrictions. Files have been stubbed with instructions to delete.
-  - **BLOCKED**: Could not move `Assets/_Scripts/Secrets.cs` (read restricted). User must move manually.
-  - **Guardrails**: Currently failing due to presence of stubbed root `.cs` files.
+- **Duplicate Type Fix**: Identified `SovereignEngine.asmdef` files in `engine/` causing Unity to double-compile the source. Stubbed them for deletion.
+- **Assembly Definition Update**: Removed legacy `SovereignEngine` reference from `SovereignState.Unity.asmdef`.
 
 ## 4. Next Actions for User
-1. **DELETE** the following stubbed files from repo root:
-   - `ResourceType.cs`
-   - `MarketSnapshot.cs`
-   - `GovernmentMod.cs`
-   - `ModLoader.cs`
-   - `LedgerTests.cs`
-   - `PlotDecayTests.cs`
-   - `Sovereign.Mods.csproj`
-2. **DELETE** `Assets/_Scripts` folder after verifying `Secrets.cs` is moved to `Assets/Scripts/Integrations/Supabase/`.
-3. **RUN** `.\run_guardrails.ps1` to verify clean state.
+1. **DELETE** `engine/src/SovereignEngine.asmdef`.
+2. **DELETE** `engine/SovereignEngine.asmdef`.
+3. **CHECK** Unity console. The `CS0433` and `CS0436` errors should be gone.

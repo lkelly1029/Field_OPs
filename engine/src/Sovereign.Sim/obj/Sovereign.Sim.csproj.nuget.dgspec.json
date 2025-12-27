@@ -1,0 +1,274 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Sim\\Sovereign.Sim.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj",
+        "projectName": "Sovereign.Core",
+        "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj",
+        "packagesPath": "C:\\Users\\trulu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\trulu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\Sovereign.Economy.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\Sovereign.Economy.csproj",
+        "projectName": "Sovereign.Economy",
+        "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\Sovereign.Economy.csproj",
+        "packagesPath": "C:\\Users\\trulu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\trulu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj": {
+                "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\Sovereign.Mods.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\Sovereign.Mods.csproj",
+        "projectName": "Sovereign.Mods",
+        "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\Sovereign.Mods.csproj",
+        "packagesPath": "C:\\Users\\trulu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\trulu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj": {
+                "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Sim\\Sovereign.Sim.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Sim\\Sovereign.Sim.csproj",
+        "projectName": "Sovereign.Sim",
+        "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Sim\\Sovereign.Sim.csproj",
+        "packagesPath": "C:\\Users\\trulu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Sim\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\trulu\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "targetAlias": "netstandard2.1",
+            "projectReferences": {
+              "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj": {
+                "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Core\\Sovereign.Core.csproj"
+              },
+              "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\Sovereign.Economy.csproj": {
+                "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Economy\\Sovereign.Economy.csproj"
+              },
+              "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\Sovereign.Mods.csproj": {
+                "projectPath": "C:\\Users\\trulu\\Field_OPs\\engine\\src\\Sovereign.Mods\\Sovereign.Mods.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.300"
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "targetAlias": "netstandard2.1",
+          "dependencies": {
+            "System.Text.Json": {
+              "target": "Package",
+              "version": "[8.0.5, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.308\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

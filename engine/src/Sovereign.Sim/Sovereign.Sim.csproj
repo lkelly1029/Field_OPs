@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sovereign.Core\Sovereign.Core.csproj" />
     <ProjectReference Include="..\Sovereign.Economy\Sovereign.Economy.csproj" />
+    <ProjectReference Include="..\Sovereign.Mods\Sovereign.Mods.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
   </ItemGroup>
 </Project>

@@ -36,11 +36,18 @@ namespace SovereignState.Unity.SimBridge
                 metrics["Net Change"] = $"{_universe.NetTreasuryChangeLastTick:+#;-#;0} cents";
                 
                 // Resource Metrics
+                var snapshot = _universe.GetMarketSnapshot();
                 foreach (ResourceType type in System.Enum.GetValues(typeof(ResourceType)))
                 {
                     long demand = _universe.TotalDemandLastTick.ContainsKey(type) ? _universe.TotalDemandLastTick[type] : 0;
                     long supply = _universe.TotalSupplyLastTick.ContainsKey(type) ? _universe.TotalSupplyLastTick[type] : 0;
                     metrics[$"{type} (D/S)"] = $"{demand} / {supply}";
+
+                    if (snapshot.Metrics.TryGetValue(type, out var market))
+                    {
+                        metrics[$"{type} Price"] = $"{market.BestPrice.Value} cents";
+                        metrics[$"{type} Share"] = $"{market.PlayerSharePct:P0} Player";
+                    }
                 }
             }
             else

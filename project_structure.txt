@@ -12,6 +12,8 @@ Field_OPs Repository Structure
 |-- README.md
 |-- run_guardrails.ps1
 |-- STATUS.md
+|-- Current_state
+|-- SovereignState_NextSteps_WorkOrder_UPDATED.md
 |
 |-- control/
 |   |-- sovereign_state_control.yaml
@@ -28,25 +30,27 @@ Field_OPs Repository Structure
 |   |-- Sovereign.Engine.sln
 |   `-- src/
 |       |-- Sovereign.Core/
-|       |   |-- EnergyWh.cs
-|       |   |-- IConsumer.cs
-|       |   |-- IProducer.cs
-|       |   |-- MoneyCents.cs
+|       |   |-- ResourceType.cs
 |       |   |-- Sovereign.Core.csproj
 |       |   `-- TickIndex.cs
 |       |-- Sovereign.Economy/
 |       |   |-- GlobalExchange.cs
 |       |   |-- Ledger.cs
+|       |   |-- MarketSnapshot.cs
 |       |   `-- Sovereign.Economy.csproj
+|       |-- Sovereign.Mods/
+|       |   |-- GovernmentMod.cs
+|       |   |-- ModLoader.cs
+|       |   `-- Sovereign.Mods.csproj
 |       |-- Sovereign.Scenarios/
 |       |   `-- PowerAcceptance.cs
 |       |-- Sovereign.Sim/
-|       |   |-- House.cs
-|       |   |-- NuclearPlant.cs
 |       |   |-- Plot.cs
 |       |   |-- Sovereign.Sim.csproj
 |       |   `-- Universe.cs
 |       `-- Sovereign.Tests/
+|           |-- LedgerTests.cs
+|           |-- PlotDecayTests.cs
 |           `-- Sovereign.Tests.csproj
 |
 |-- Assets/
@@ -54,15 +58,21 @@ Field_OPs Repository Structure
 |   |   |-- _Recovery/
 |   |   |-- _Testing/
 |   |   `-- SovereignState_Nested/
-|   |-- _Scripts/
-|   |   |-- ConstructionMaterial.cs
-|   |   |-- Secrets.cs
-|   |   `-- SupabaseManager.cs
 |   |-- Scripts/
 |   |   |-- DevTools/
 |   |   |   `-- SovereignDevConsoleOverlay.cs
+|   |   |-- Integrations/
+|   |   |   `-- Supabase/
+|   |   |       |-- ConstructionMaterial.cs
+|   |   |       |-- Secrets.cs
+|   |   |       `-- SupabaseManager.cs
 |   |   `-- SimBridge/
-|   |       `-- ISimDebugProvider.cs
+|   |       |-- ISimDebugProvider.cs
+|   |       |-- SimulationRunner.cs
+|   |       |-- PlotRenderer.cs
+|   |       |-- PlotClicker.cs
+|   |       |-- TooltipManager.cs
+|   |       `-- BuildingManager.cs
 |   |-- Scenes/
 |   |   `-- SampleScene.unity
 |   |-- Settings/
