@@ -209,11 +209,19 @@ namespace Sovereign.Sim
             CurrentTick++;
         }
 
+        public MarketSnapshot GetMarketSnapshot()
+        {
+            return LastMarketSnapshot ?? _exchange.GetSnapshot(CurrentTick.Value);
+        }
+
+        public IReadOnlyList<Plot> GetPlots() => _plots;
+
         public void LoadState(Guid id, long currentTick, Guid treasuryId)
         {
             Id = id;
             CurrentTick = new TickIndex(currentTick);
             TreasuryId = treasuryId;
+            ActiveGovernment = GovernmentMod.Default;
         }
     }
 }
