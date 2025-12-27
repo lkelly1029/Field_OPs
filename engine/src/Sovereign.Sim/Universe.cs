@@ -5,14 +5,25 @@ using Sovereign.Core;
 using Sovereign.Core.Primitives;
 using Sovereign.Economy;
 
+using Sovereign.Core.Commands;
+
 namespace Sovereign.Sim
 {
     public class Universe
     {
-        public Guid Id { get; } = Guid.NewGuid();
+        public Guid Id { get; private set; } = Guid.NewGuid();
+// ... (existing code)
+
+        public void ProcessCommand(ICommand command)
+        {
+            command.Execute(this);
+        }
+
+        public void Tick()
+// ... (existing code)
         public TickIndex CurrentTick { get; private set; }
         public Ledger Ledger { get; }
-        public Guid TreasuryId { get; } = Guid.NewGuid();
+        public Guid TreasuryId { get; private set; } = Guid.NewGuid();
 
         public IReadOnlyList<Plot> Plots => _plots;
 
@@ -38,6 +49,14 @@ namespace Sovereign.Sim
             
             // Seed treasury
             Ledger.Credit(TreasuryId, new MoneyCents(1_000_000_00)); // $1,000,000.00
+        }
+
+        public void LoadState(Guid id, long tick, Guid treasuryId)
+        {
+            Id = id;
+            CurrentTick = new TickIndex(tick);
+            TreasuryId = treasuryId;
+            _plots.Clear(); // Clear default plots if any
         }
 
         public void AddPlot(Plot plot)

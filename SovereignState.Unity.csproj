@@ -51,6 +51,7 @@
     <Compile Include="Assets\Scripts\SimBridge\SimulationRunner.cs" />
     <Compile Include="Assets\Scripts\DevTools\SovereignDevConsoleOverlay.cs" />
     <Compile Include="Assets\Scripts\SimBridge\ISimDebugProvider.cs" />
+    <Compile Include="Assets\Scripts\SimBridge\PlotRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Scripts\SovereignState.Unity.asmdef" />

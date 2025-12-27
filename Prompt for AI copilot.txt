@@ -1,1 +1,1 @@
-Follow the instructions in GEMINI_AGENT_BRIEF.md and project_structure.txt exactly. Scan the repo and update STATUS.md.
+Follow the instructions in GEMINI_AGENT_BRIEF.md, project_structure.txt and SovereignState_NextSteps_WorkOrder.md exactly. Scan the repo and update STATUS.md.

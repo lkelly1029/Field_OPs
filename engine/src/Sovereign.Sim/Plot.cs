@@ -25,7 +25,7 @@ namespace Sovereign.Sim
         public IConsumer Consumer { get; set; }
         public IProducer Producer { get; set; }
 
-        public double Stability { get; private set; } = 100.0;
+        public double Stability { get; set; } = 100.0;
         
         public Dictionary<ResourceType, long> Demands { get; } = new();
         public Dictionary<ResourceType, long> Deliveries { get; } = new();

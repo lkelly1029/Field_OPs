@@ -1,0 +1,484 @@
+# Current Project State
+
+## Project Status (from STATUS.md)
+
+# STATUS.md
+
+## 1. Findings (Factual Inventory)
+
+### Control Layer
+- **Control File**: `control/sovereign_state_control.yaml` [EXISTS]
+- **Documentation**: Onboarding, Build Reference, First Vertical Guide [EXISTS]
+- **Alignment**: Control file matches Brief requirements [EXISTS]
+
+### Engine Layer
+- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim` projects [EXISTS]
+- **Scenarios**: `PowerAcceptance.cs`, `WaterAcceptance.cs`, `IntegrationAcceptance.cs`, `IndustrialAcceptance.cs`, `SerializationAcceptance.cs` [EXISTS]
+- **Legacy Artifacts**: `engine/src/world`, `simulation`, etc [BLOCKED - Shell Restricted] - Marked with NOTICE file.
+- **Multi-Resource Support**: **IMPLEMENTED**.
+- **Water Vertical**: **IMPLEMENTED & VERIFIED**.
+- **Deep Integration**: **IMPLEMENTED**.
+- **Metrics**: **IMPLEMENTED**.
+- **Resource Matrix**: **EXPANDED**.
+- **Storage Buffers**: **IMPLEMENTED**.
+- **Storage Caps**: **IMPLEMENTED**.
+- **Resource Decay**: **IMPLEMENTED**.
+- **Steel Vertical**: **IMPLEMENTED**.
+- **Iron Vertical**: **IMPLEMENTED**.
+- **Refinery Logic**: **IMPLEMENTED & VERIFIED**.
+- **Financial Dashboard**: **IMPLEMENTED**.
+- **Industrial Chain**: **VERIFIED**.
+- **Logistics**: **IMPLEMENTED**.
+- **Commands**: **IMPLEMENTED**.
+- **Persistence**: **IMPLEMENTED**.
+
+### Unity Layer
+- **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [UPDATED]. Includes Sim/Persistence Controls and **Hover Tooltips**.
+- **Sim Bridge Interface**: `Assets/Scripts/SimBridge/ISimDebugProvider.cs` [EXISTS]
+- **Sim Bridge Implementation**: `Assets/Scripts/SimBridge/SimulationRunner.cs` [UPDATED].
+- **Plot Renderer**: `Assets/Scripts/SimBridge/PlotRenderer.cs` [EXISTS]
+- **Player Input**: `Assets/Scripts/SimBridge/PlotClicker.cs` [UPDATED]. Detects hover.
+- **Tooltip Manager**: `Assets/Scripts/SimBridge/TooltipManager.cs` [CREATED].
+- **Building Manager**: `Assets/Scripts/SimBridge/BuildingManager.cs` [EXISTS]
+- **Scene**: `Assets/Scenes/SampleScene.unity` [EXISTS]
+
+### CI / Guardrails
+- **Scripts**: `validate_control.py`, `validate_repo_guardrails.py`, `run_guardrails.ps1` [EXISTS]
+
+## 2. Next Steps (Prioritized)
+
+1.  **Build Engine DLLs**
+    -   **Task**: Build the engine projects (`Sovereign.Sim` etc.) locally.
+    -   **Target**: Copy DLLs to `Assets/Plugins/Sovereign/`.
+    -   **Goal**: Ensure Unity references the engine via binaries, keeping strict separation.
+
+2.  **Verify SimRunner Bridge**
+    -   **Task**: Ensure `SimulationRunner.cs` correctly steps ticks using the referenced DLL logic.
+    -   **Goal**: Engine runs "headless" inside Unity.
+
+3.  **Final Polish**
+    -   **Task**: Ensure all code paths are robust and documented.
+
+## File Structure
+
+C:\Users\trulu\Field_OPs\Assets\Scripts\DevTools\SovereignDevConsoleOverlay.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\PlotClicker.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\TooltipManager.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\SimulationRunner.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\BuildingManager.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\PlotRenderer.cs.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\PlotRenderer.cs
+C:\Users\trulu\Field_OPs\Assets\_Scripts\ConstructionMaterial.cs.meta
+C:\Users\trulu\Field_OPs\Assets\_Scripts\ConstructionMaterial.cs
+C:\Users\trulu\Field_OPs\Assets\Scripts\SovereignState.Unity.asmdef.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\SovereignState.Unity.asmdef
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\SimulationRunner.cs.meta
+C:\Users\trulu\Field_OPs\Assets\_Scripts\README.md
+C:\Users\trulu\Field_OPs\Assets\_Scripts\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet.config.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested\unity\SovereignState.Unity\Packages.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested\unity\SovereignState.Unity\Assets.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested\unity\SovereignState.Unity\ProjectSettings.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested\unity\SovereignState.Unity.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested\unity.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\DevTools.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\_Recovery.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\SovereignState_Nested.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\ISimDebugProvider.cs.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\DevTools\SovereignDevConsoleOverlay.cs.meta
+C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\ISimDebugProvider.cs
+C:\Users\trulu\Field_OPs\Assets\_Legacy\_Recovery\0.unity
+C:\Users\trulu\Field_OPs\Assets\_Legacy\_Recovery\0.unity.meta
+C:\Users\trulu\Field_OPs\Assets\_Legacy\_Testing.meta
+C:\Users\trulu\Field_OPs\Assets\_Recovery.meta
+C:\Users\trulu\Field_OPs\Assets\_Scripts.meta
+C:\Users\trulu\Field_OPs\Assets\_Scripts\.gitignore
+C:\Users\trulu\Field_OPs\Assets\_Scripts\Secrets.cs.meta
+C:\Users\trulu\Field_OPs\Assets\_Scripts\SupabaseManager.cs
+C:\Users\trulu\Field_OPs\Assets\_Scripts\SupabaseManager.cs.meta
+C:\Users\trulu\Field_OPs\Assets\InputSystem_Actions.inputactions
+C:\Users\trulu\Field_OPs\Assets\InputSystem_Actions.inputactions.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet.config
+C:\Users\trulu\Field_OPs\Assets\NuGet.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NugetForUnity.dll
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NugetForUnity.dll.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NuGetForUnity.PluginAPI.dll
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NuGetForUnity.PluginAPI.dll.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NuGetForUnity.PluginAPI.xml
+C:\Users\trulu\Field_OPs\Assets\NuGet\Editor\NuGetForUnity.PluginAPI.xml.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\LICENSE
+C:\Users\trulu\Field_OPs\Assets\NuGet\LICENSE.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\README.pdf
+C:\Users\trulu\Field_OPs\Assets\NuGet\README.pdf.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Resources.meta
+C:\Users\trulu\Field_OPs\Assets\NuGet\Resources\defaultIcon.png
+C:\Users\trulu\Field_OPs\Assets\NuGet\Resources\defaultIcon.png.meta
+C:\Users\trulu\Field_OPs\Assets\packages.config
+C:\Users\trulu\Field_OPs\Assets\packages.config.meta
+C:\Users\trulu\Field_OPs\Assets\Packages.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\functions-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\functions-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib\netstandard2.0\Supabase.Functions.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib\netstandard2.0\Supabase.Functions.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib\netstandard2.0\Supabase.Functions.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\lib\netstandard2.0\Supabase.Functions.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\functions-csharp.1.3.2\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\gotrue-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\gotrue-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib\netstandard2.0\Supabase.Gotrue.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib\netstandard2.0\Supabase.Gotrue.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib\netstandard2.0\Supabase.Gotrue.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\lib\netstandard2.0\Supabase.Gotrue.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\gotrue-csharp.4.2.7\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\netstandard2.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\netstandard2.1\Microsoft.Bcl.AsyncInterfaces.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\LICENSE.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\LICENSE.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\Microsoft.Bcl.AsyncInterfaces.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\Microsoft.Bcl.AsyncInterfaces.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\THIRD-PARTY-NOTICES.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\THIRD-PARTY-NOTICES.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\useSharedDesignerContext.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\useSharedDesignerContext.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\version.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\version.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Abstractions.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Abstractions.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Abstractions.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\Microsoft.IdentityModel.Abstractions.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Abstractions.7.0.3\Microsoft.IdentityModel.Abstractions.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.JsonWebTokens.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\Microsoft.IdentityModel.JsonWebTokens.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.JsonWebTokens.7.0.3\Microsoft.IdentityModel.JsonWebTokens.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Logging.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Logging.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Logging.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\Microsoft.IdentityModel.Logging.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Logging.7.0.3\Microsoft.IdentityModel.Logging.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\lib\netstandard2.0\Microsoft.IdentityModel.Tokens.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\Microsoft.IdentityModel.Tokens.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Microsoft.IdentityModel.Tokens.7.0.3\Microsoft.IdentityModel.Tokens.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib\netstandard2.0\MimeMapping.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib\netstandard2.0\MimeMapping.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib\netstandard2.0\MimeMapping.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\lib\netstandard2.0\MimeMapping.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\MimeMapping.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\MimeMapping.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\MimeMapping.2.0.0\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\lib\netstandard2.0\Newtonsoft.Json.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\LICENSE.md
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\LICENSE.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\Newtonsoft.Json.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\Newtonsoft.Json.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\packageIcon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\packageIcon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\Newtonsoft.Json.13.0.3\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib\netstandard2.0\Supabase.Postgrest.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib\netstandard2.0\Supabase.Postgrest.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib\netstandard2.0\Supabase.Postgrest.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\lib\netstandard2.0\Supabase.Postgrest.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\postgrest-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\postgrest-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\postgrest-csharp.3.5.1\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib\netstandard2.0\Supabase.Realtime.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib\netstandard2.0\Supabase.Realtime.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib\netstandard2.0\Supabase.Realtime.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\lib\netstandard2.0\Supabase.Realtime.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\realtime-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\realtime-csharp.6.0.4\realtime-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib\netstandard2.0\Supabase.Core.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib\netstandard2.0\Supabase.Core.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib\netstandard2.0\Supabase.Core.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\lib\netstandard2.0\Supabase.Core.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\supabase-core.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-core.0.0.3\supabase-core.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib\netstandard2.0\Supabase.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib\netstandard2.0\Supabase.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib\netstandard2.0\Supabase.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\lib\netstandard2.0\Supabase.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\supabase-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-csharp.0.16.2\supabase-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0\Supabase.Storage.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0\Supabase.Storage.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0\Supabase.Storage.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\lib\netstandard2.0\Supabase.Storage.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\supabase-storage-csharp.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\supabase-storage-csharp.1.4.0\supabase-storage-csharp.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\netstandard2.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\netstandard2.0\System.IdentityModel.Tokens.Jwt.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\netstandard2.0\System.IdentityModel.Tokens.Jwt.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\lib\netstandard2.0\System.IdentityModel.Tokens.Jwt.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\System.IdentityModel.Tokens.Jwt.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.IdentityModel.Tokens.Jwt.7.0.3\System.IdentityModel.Tokens.Jwt.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\net5.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\net5.0\_._
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\net5.0\_._.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\netcoreapp3.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\netcoreapp3.1\System.Reactive.targets
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\buildTransitive\netcoreapp3.1\System.Reactive.targets.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib\netstandard2.0\System.Reactive.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib\netstandard2.0\System.Reactive.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib\netstandard2.0\System.Reactive.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\lib\netstandard2.0\System.Reactive.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\System.Reactive.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Reactive.5.0.0\System.Reactive.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\lib\netstandard2.0\System.Security.Cryptography.Cng.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\lib\netstandard2.0\System.Security.Cryptography.Cng.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\LICENSE.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\LICENSE.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\System.Security.Cryptography.Cng.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\System.Security.Cryptography.Cng.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\THIRD-PARTY-NOTICES.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\THIRD-PARTY-NOTICES.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\useSharedDesignerContext.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\useSharedDesignerContext.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\version.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Security.Cryptography.Cng.4.5.0\version.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\Icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\Icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib\netstandard2.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib\netstandard2.1\System.Text.Encodings.Web.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib\netstandard2.1\System.Text.Encodings.Web.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib\netstandard2.1\System.Text.Encodings.Web.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\lib\netstandard2.1\System.Text.Encodings.Web.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\LICENSE.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\LICENSE.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\System.Text.Encodings.Web.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\System.Text.Encodings.Web.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\THIRD-PARTY-NOTICES.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\THIRD-PARTY-NOTICES.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\useSharedDesignerContext.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\useSharedDesignerContext.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\version.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Encodings.Web.4.7.2\version.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\Icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\Icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib\netstandard2.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib\netstandard2.0\System.Text.Json.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib\netstandard2.0\System.Text.Json.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib\netstandard2.0\System.Text.Json.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\lib\netstandard2.0\System.Text.Json.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\LICENSE.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\LICENSE.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\System.Text.Json.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\System.Text.Json.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\THIRD-PARTY-NOTICES.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\THIRD-PARTY-NOTICES.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\useSharedDesignerContext.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\useSharedDesignerContext.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\version.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Text.Json.4.7.2\version.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\Icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\Icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib\netstandard2.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib\netstandard2.1\System.Threading.Channels.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib\netstandard2.1\System.Threading.Channels.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib\netstandard2.1\System.Threading.Channels.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\lib\netstandard2.1\System.Threading.Channels.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\LICENSE.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\LICENSE.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\System.Threading.Channels.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\System.Threading.Channels.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\THIRD-PARTY-NOTICES.TXT
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\THIRD-PARTY-NOTICES.TXT.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\useSharedDesignerContext.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\useSharedDesignerContext.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\version.txt
+C:\Users\trulu\Field_OPs\Assets\Packages\System.Threading.Channels.5.0.0\version.txt.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\.signature.p7s
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\icon.png
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\icon.png.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib\netstandard2.1.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib\netstandard2.1\Websocket.Client.dll
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib\netstandard2.1\Websocket.Client.dll.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib\netstandard2.1\Websocket.Client.xml
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\lib\netstandard2.1\Websocket.Client.xml.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\README.md
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\README.md.meta
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\Websocket.Client.nuspec
+C:\Users\trulu\Field_OPs\Assets\Packages\Websocket.Client.4.6.1\Websocket.Client.nuspec.meta
+C:\Users\trulu\Field_OPs\Assets\Readme.asset
+C:\Users\trulu\Field_OPs\Assets\Readme.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Scenes.meta
+C:\Users\trulu\Field_OPs\Assets\Scenes\SampleScene.unity
+C:\Users\trulu\Field_OPs\Assets\Scenes\SampleScene.unity.meta
+C:\Users\trulu\Field_OPs\Assets\Settings.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\Build Profiles.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\Build Profiles\Android™ 1.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\BuildProfiles\Android™ 1.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\BuildProfiles\Android™.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\BuildProfiles\Android™.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\DefaultVolumeProfile.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\DefaultVolumeProfile.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\Mobile_Renderer.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\Mobile_Renderer.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\Mobile_RPAsset.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\Mobile_RPAsset.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\PC_Renderer.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\PC_Renderer.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\PC_RPAsset.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\PC_RPAsset.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\SampleSceneProfile.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\SampleSceneProfile.asset.meta
+C:\Users\trulu\Field_OPs\Assets\Settings\UniversalRenderPipelineGlobalSettings.asset
+C:\Users\trulu\Field_OPs\Assets\Settings\UniversalRenderPipelineGlobalSettings.asset.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Icons.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Icons\URP.png
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Icons\URP.png.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Layout.wlt
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Layout.wlt.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts\Editor.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts\Editor\ReadmeEditor.cs.meta
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts\Readme.cs
+C:\Users\trulu\Field_OPs\Assets\TutorialInfo\Scripts\Readme.cs.meta
+C:\Users\trulu\Field_OPs\ProjectSettings\AudioManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\ClusterInputManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\DynamicsManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\EditorSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\GraphicsSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\InputManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\MemorySettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\MultiplayerManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\NavMeshAreas.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\PackageManagerSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\Packages\com.unity.dedicated-server\MultiplayerRolesSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\Physics2DSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\PresetManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\ProjectSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\ProjectVersion.txt
+C:\Users\trulu\Field_OPs\ProjectSettings\QualitySettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\SceneTemplateSettings.json
+C:\Users\trulu\Field_OPs\ProjectSettings\TagManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\TimeManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\UnityConnectSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\URPProjectSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\VersionControlSettings.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\VFXManager.asset
+C:\Users\trulu\Field_OPs\ProjectSettings\XRSettings.asset

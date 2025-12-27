@@ -10,6 +10,18 @@ namespace Sovereign.Economy
         private readonly Dictionary<Guid, MoneyCents> _monetaryBalances = new();
         private readonly Dictionary<ResourceType, Dictionary<Guid, long>> _resourceBalances = new();
 
+        public IReadOnlyDictionary<Guid, MoneyCents> MonetaryBalances => _monetaryBalances;
+        public IReadOnlyDictionary<ResourceType, Dictionary<Guid, long>> ResourceBalances => _resourceBalances;
+
+        public void LoadState(Dictionary<Guid, MoneyCents> monetary, Dictionary<ResourceType, Dictionary<Guid, long>> resources)
+        {
+            _monetaryBalances.Clear();
+            foreach (var kvp in monetary) _monetaryBalances[kvp.Key] = kvp.Value;
+
+            _resourceBalances.Clear();
+            foreach (var kvp in resources) _resourceBalances[kvp.Key] = kvp.Value;
+        }
+
         public MoneyCents GetBalance(Guid accountId)
         {
             return _monetaryBalances.ContainsKey(accountId) ? _monetaryBalances[accountId] : new MoneyCents(0);
