@@ -1,1 +1,1 @@
-Follow the instructions in GEMINI_AGENT_BRIEF.md exactly. Scan the repo and update STATUS.md.
+Follow the instructions in GEMINI_AGENT_BRIEF.md and project_structure.txt exactly. Scan the repo and update STATUS.md.

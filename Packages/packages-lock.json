@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.sovereign.engine": {
+      "version": "file:../engine",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
+    },
     "com.unity.ai.assistant": {
       "version": "1.0.0-pre.12",
       "depth": 0,

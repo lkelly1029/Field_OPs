@@ -1,49 +1,57 @@
-# Sovereign State — Current Status
+# STATUS.md
 
-Last updated: 2025-12-26 04:50
+## 1. Findings (Factual Inventory)
 
-## Sources of Truth
-- control/sovereign_state_control.yaml
-- control/SovereignState_Build_Reference.md
-- control/SovereignState_Unity_Placement_Reference.md
-- control/SovereignState_Dev_Onboarding_Checklist.md
-- control/SovereignState_First_Vertical_Replication_Guide.md
-- README.md
+### Control Layer
+- **Control File**: `control/sovereign_state_control.yaml` [EXISTS]
+- **Documentation**: Onboarding, Build Reference, First Vertical Guide [EXISTS]
+- **Alignment**: Control file matches Brief requirements [EXISTS]
 
-## Repo Health
-- Guardrails: **OK**
-- Unity compile: OK
-- Engine build: **Project Files Scaffolded** (Moving source files next)
+### Engine Layer
+- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim` projects [EXISTS]
+- **Scenarios**: `PowerAcceptance.cs`, `WaterAcceptance.cs`, `IntegrationAcceptance.cs`, `IndustrialAcceptance.cs` [EXISTS]
+- **Legacy Artifacts**: `engine/src/world`, `simulation`, etc [BLOCKED - Shell Restricted] - Marked with NOTICE file.
+- **Multi-Resource Support**: **IMPLEMENTED**.
+- **Water Vertical**: **IMPLEMENTED & VERIFIED**.
+- **Deep Integration**: **IMPLEMENTED**.
+- **Metrics**: **IMPLEMENTED**.
+- **Resource Matrix**: **EXPANDED**.
+- **Storage Buffers**: **IMPLEMENTED**.
+- **Storage Caps**: **IMPLEMENTED**.
+- **Resource Decay**: **IMPLEMENTED**.
+- **Steel Vertical**: **IMPLEMENTED**.
+- **Iron Vertical**: **IMPLEMENTED**.
+- **Refinery Logic**: **IMPLEMENTED & VERIFIED**.
+- **Financial Dashboard**: **IMPLEMENTED**.
+- **Industrial Chain**: **VERIFIED**. `IndustrialAcceptance.cs` updated to test Iron Mine power consumption.
+- **Logistics**: **IMPLEMENTED**.
 
-## Current Milestone
-Power Vertical MVP
+### Unity Layer
+- **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [EXISTS]
+- **Sim Bridge Interface**: `Assets/Scripts/SimBridge/ISimDebugProvider.cs` [EXISTS]
+- **Sim Bridge Implementation**: `Assets/Scripts/SimBridge/SimulationRunner.cs` [EXISTS - Updated with Financials]
+- **Scene**: `Assets/Scenes/SampleScene.unity` [EXISTS]
 
-## Power Vertical — Implementation Checklist
-### Simulation Core
-- [X] Tick loop (deterministic) in `Sovereign.Sim`
-- [X] Ledger core in `Sovereign.Economy`
-- [X] State machine for Plots
+### CI / Guardrails
+- **Scripts**: `validate_control.py`, `validate_repo_guardrails.py`, `run_guardrails.ps1` [EXISTS]
 
-### Power Sector
-- [X] Power producer (NuclearPlant) and Consumer (House) implemented
-- [ ] Grid loss / transport math
-- [ ] Delivery to consumer (House)
-- [ ] Settlement/payment
-- [X] AI Global Market import fallback implemented
+## 2. Conclusion
 
-### Testing
-- [X] `PowerAcceptance.cs` scenario scaffolded
-- [X] Basic unit tests implemented
+The "First Vertical Replication" phase is **COMPLETE**.
 
-### Unity Visibility
-- [X] Dev Console overlay exists
-- [ ] `ISimDebugProvider` wiring pending
+The engine now supports:
+1.  **Multiple Resources**: Power, Water, Food, Steel, Iron.
+2.  **Complex Chains**: Mine (Power) -> Steel Mill (Power+Water+Iron) -> Steel.
+3.  **Simulation Physics**:
+    -   **Decay**: Food rots in storage.
+    -   **Logistics**: Transport fees and loss over distance.
+    -   **Refinery Logic**: Factories stop if inputs missing.
+    -   **Buffers**: Buildings store resources to survive volatility.
+4.  **Financials**: Net treasury change tracking and visualization.
 
-## Next Steps
-1. **Source Reorganization:** Execute the final PowerShell move command to clear empty subfolders.
-2. **Build Test:** Run `dotnet build engine/Sovereign.Engine.sln` to confirm architecture.
-3. **Unity Wiring:** Connect `Universe` tick to Unity `SimRunner`.
+## 3. Next Phase Recommendation
 
-## Notes
-- `project_structure.txt` generated for reference.
-- `Sovereign.Core.csproj` recreated with standard SDK content.
+**Visuals & Gameplay Loop**
+1.  **Unity Visualization**: Connect these numbers to on-screen graphs/bars.
+2.  **Player Input**: Allow clicking plots to assign buildings (currently hardcoded in tests/runner).
+3.  **Save/Load**: Serialize the `Universe` state to JSON.

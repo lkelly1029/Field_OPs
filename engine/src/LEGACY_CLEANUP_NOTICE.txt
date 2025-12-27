@@ -1,0 +1,9 @@
+The following directories are LEGACY and should be deleted, but could not be removed due to security restrictions:
+- world
+- simulation
+- contracts
+- power
+- consumers
+- economy (legacy folder, distinct from Sovereign.Economy)
+
+Please ignore these files. They are not part of the active codebase.

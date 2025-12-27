@@ -1,0 +1,17 @@
+{
+    "name": "SovereignState.Unity",
+    "rootNamespace": "SovereignState.Unity",
+    "references": [
+        "SovereignEngine",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

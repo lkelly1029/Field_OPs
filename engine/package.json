@@ -1,0 +1,7 @@
+{
+  "name": "com.sovereign.engine",
+  "version": "0.1.0",
+  "displayName": "Sovereign Engine",
+  "description": "Headless economic simulation engine",
+  "unity": "6000.0"
+}
