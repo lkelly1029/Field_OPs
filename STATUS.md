@@ -23,35 +23,28 @@
 - **Iron Vertical**: **IMPLEMENTED**.
 - **Refinery Logic**: **IMPLEMENTED & VERIFIED**.
 - **Financial Dashboard**: **IMPLEMENTED**.
-- **Industrial Chain**: **VERIFIED**. `IndustrialAcceptance.cs` updated to test Iron Mine power consumption.
+- **Industrial Chain**: **VERIFIED**.
 - **Logistics**: **IMPLEMENTED**.
 
 ### Unity Layer
-- **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [EXISTS]
+- **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [EXISTS - Updated with Visual Bars]
 - **Sim Bridge Interface**: `Assets/Scripts/SimBridge/ISimDebugProvider.cs` [EXISTS]
-- **Sim Bridge Implementation**: `Assets/Scripts/SimBridge/SimulationRunner.cs` [EXISTS - Updated with Financials]
+- **Sim Bridge Implementation**: `Assets/Scripts/SimBridge/SimulationRunner.cs` [EXISTS]
+- **Plot Renderer**: `Assets/Scripts/SimBridge/PlotRenderer.cs` [UPDATED]. Now correctly links Engine `Plot` data to Unity `GameObject` visuals using X, Y coordinates.
 - **Scene**: `Assets/Scenes/SampleScene.unity` [EXISTS]
 
 ### CI / Guardrails
 - **Scripts**: `validate_control.py`, `validate_repo_guardrails.py`, `run_guardrails.ps1` [EXISTS]
 
-## 2. Conclusion
+## 2. Next Steps (Prioritized)
 
-The "First Vertical Replication" phase is **COMPLETE**.
+1.  **Player Input (Plot Interaction)**
+    -   **Path**: `Assets/Scripts/SimBridge/PlotClicker.cs` (New)
+    -   **Task**: Implement a raycasting script that detects clicks on plot cubes and toggles their state/building.
 
-The engine now supports:
-1.  **Multiple Resources**: Power, Water, Food, Steel, Iron.
-2.  **Complex Chains**: Mine (Power) -> Steel Mill (Power+Water+Iron) -> Steel.
-3.  **Simulation Physics**:
-    -   **Decay**: Food rots in storage.
-    -   **Logistics**: Transport fees and loss over distance.
-    -   **Refinery Logic**: Factories stop if inputs missing.
-    -   **Buffers**: Buildings store resources to survive volatility.
-4.  **Financials**: Net treasury change tracking and visualization.
+2.  **Save/Load**
+    -   **Path**: `engine/src/Sovereign.Serialization/UniverseState.cs` (New)
+    -   **Task**: Use `System.Text.Json` to serialize the `Universe` and its `Plots`.
 
-## 3. Next Phase Recommendation
-
-**Visuals & Gameplay Loop**
-1.  **Unity Visualization**: Connect these numbers to on-screen graphs/bars.
-2.  **Player Input**: Allow clicking plots to assign buildings (currently hardcoded in tests/runner).
-3.  **Save/Load**: Serialize the `Universe` state to JSON.
+3.  **Refine Unity UI**
+    -   **Task**: Add resource-specific icons or better formatting to the console overlay.

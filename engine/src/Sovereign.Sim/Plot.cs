@@ -19,6 +19,8 @@ namespace Sovereign.Sim
 
     public class Plot
     {
+        public int X { get; set; }
+        public int Y { get; set; }
         public PlotState State { get; set; } = PlotState.Empty;
         public IConsumer Consumer { get; set; }
         public IProducer Producer { get; set; }

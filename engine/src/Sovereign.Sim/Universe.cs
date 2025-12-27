@@ -14,6 +14,8 @@ namespace Sovereign.Sim
         public Ledger Ledger { get; }
         public Guid TreasuryId { get; } = Guid.NewGuid();
 
+        public IReadOnlyList<Plot> Plots => _plots;
+
         private readonly List<Plot> _plots = new();
         private readonly GlobalExchange _exchange;
 

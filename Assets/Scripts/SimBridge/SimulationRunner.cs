@@ -21,6 +21,8 @@ namespace SovereignState.Unity.SimBridge
 
         public long TreasuryCents => _universe?.Ledger?.GetBalance(_universe.TreasuryId).Value ?? 0;
 
+        public Universe GetUniverse() => _universe;
+
         public Dictionary<string, string> GetDebugMetrics()
         {
             var metrics = new Dictionary<string, string>();
