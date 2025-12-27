@@ -1,0 +1,25 @@
+{
+    "name": "Sovereign.Scenarios",
+    "rootNamespace": "Sovereign.Tests.Scenarios",
+    "references": [
+        "GUID:22222222222222222222222222222222",
+        "SovereignEngine"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": true,
+    "precompiledReferences": [
+        "xunit.assert.dll",
+        "xunit.core.dll",
+        "xunit.abstractions.dll"
+    ],
+    "autoReferenced": false,
+    "defineConstraints": [
+        "UNITY_INCLUDE_TESTS"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

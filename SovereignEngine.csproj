@@ -49,28 +49,39 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="engine\src\Sovereign.Core\TickIndex.cs" />
+    <Compile Include="engine\src\Sovereign.Scenarios\WaterAcceptance.cs" />
     <Compile Include="engine\src\simulation\TickIndex.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Buildings\Farm.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\NuclearPlant.cs" />
     <Compile Include="engine\src\economy\value_objects\MoneyCents.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Buildings\WaterPump.cs" />
     <Compile Include="engine\src\Sovereign.Sim\IProducer.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Plot.cs" />
+    <Compile Include="engine\src\Sovereign.Core\ResourceType.cs" />
     <Compile Include="engine\src\Sovereign.Core\MoneyCents.cs" />
     <Compile Include="engine\src\world\Plot.cs" />
     <Compile Include="engine\src\Sovereign.Scenarios\PowerAcceptance.cs" />
     <Compile Include="engine\src\Sovereign.Core\EnergyWh.cs" />
     <Compile Include="engine\src\Sovereign.Economy\GlobalExchange.cs" />
+    <Compile Include="engine\src\Sovereign.Scenarios\IntegrationAcceptance.cs" />
     <Compile Include="engine\src\contracts\IConsumer.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Universe.cs" />
     <Compile Include="engine\src\consumers\House.cs" />
     <Compile Include="engine\src\contracts\IProducer.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Buildings\SteelMill.cs" />
+    <Compile Include="engine\src\Sovereign.Scenarios\IndustrialAcceptance.cs" />
     <Compile Include="engine\src\Sovereign.Sim\IConsumer.cs" />
+    <Compile Include="engine\src\Sovereign.Core\ResourceQuantity.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\House.cs" />
     <Compile Include="engine\src\economy\value_objects\EnergyWh.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Buildings\IronMine.cs" />
     <Compile Include="engine\src\world\Universe.cs" />
+    <Compile Include="engine\src\Sovereign.Core\ResourceDefinition.cs" />
     <Compile Include="engine\src\Sovereign.Economy\Ledger.cs" />
     <Compile Include="engine\src\power\NuclearPlant.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="engine\src\LEGACY_CLEANUP_NOTICE.txt" />
     <None Include="engine\src\SovereignEngine.asmdef" />
   </ItemGroup>
   <ItemGroup>
