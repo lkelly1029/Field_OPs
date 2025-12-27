@@ -21,6 +21,7 @@ namespace Sovereign.Sim
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public Guid OwnerId { get; set; } = Guid.NewGuid();
         public PlotState State { get; set; } = PlotState.Empty;
         public IConsumer Consumer { get; set; }
         public IProducer Producer { get; set; }
@@ -50,8 +51,8 @@ namespace Sovereign.Sim
             if (Consumer != null)
             {
                 // 1. Resolve Storage Caps
-                var caps = Consumer.GetStorageCaps();
-                var capMap = caps.ToDictionary(c => c.Type, c => c.Value);
+                // var caps = Consumer.GetStorageCaps();
+                // var capMap = caps.ToDictionary(c => c.Type, c => c.Value);
 
                 // 2. Apply Decay to Storage
                 var types = Storage.Keys.ToList();

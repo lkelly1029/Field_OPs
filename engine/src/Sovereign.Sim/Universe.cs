@@ -4,59 +4,52 @@ using System.Linq;
 using Sovereign.Core;
 using Sovereign.Core.Primitives;
 using Sovereign.Economy;
-
-using Sovereign.Core.Commands;
+using Sovereign.Mods;
+using Sovereign.Sim.Buildings;
 
 namespace Sovereign.Sim
 {
     public class Universe
     {
         public Guid Id { get; private set; } = Guid.NewGuid();
-// ... (existing code)
-
-        public void ProcessCommand(ICommand command)
-        {
-            command.Execute(this);
-        }
-
-        public void Tick()
-// ... (existing code)
         public TickIndex CurrentTick { get; private set; }
         public Ledger Ledger { get; }
+        public Dictionary<ResourceType, long> TotalDemandLastTick { get; } = new();
+        public Dictionary<ResourceType, long> TotalSupplyLastTick { get; } = new();
         public Guid TreasuryId { get; private set; } = Guid.NewGuid();
-
-        public IReadOnlyList<Plot> Plots => _plots;
+        public long NetTreasuryChangeLastTick { get; private set; }
+        public MarketSnapshot LastMarketSnapshot { get; private set; }
+        public GovernmentMod ActiveGovernment { get; private set; }
 
         private readonly List<Plot> _plots = new();
         private readonly GlobalExchange _exchange;
 
+        // MVP Constant: AI sells power at 2 cents per Wh ($20/kWh) - Very expensive!
+        public const long AI_POWER_PRICE_CENTS_PER_WH = 2;
         public static readonly Guid AI_MARKET_ID = Guid.Empty;
+        public IReadOnlyList<Plot> Plots => _plots;
 
-        // Metrics for UI
-        public Dictionary<ResourceType, long> TotalDemandLastTick { get; private set; } = new();
-        public Dictionary<ResourceType, long> TotalSupplyLastTick { get; private set; } = new();
-        public long NetTreasuryChangeLastTick { get; private set; }
-
-        public Universe() : this(new GlobalExchange(), new Ledger())
+        public Universe() : this(new GlobalExchange())
         {
         }
 
-        public Universe(GlobalExchange exchange, Ledger ledger = null)
+        public Universe(GlobalExchange exchange)
         {
             _exchange = exchange;
+            ActiveGovernment = GovernmentMod.Default;
             CurrentTick = new TickIndex(0);
-            Ledger = ledger ?? new Ledger();
+            Ledger = new Ledger();
             
-            // Seed treasury
+            // Seed treasury so we can afford initial imports
             Ledger.Credit(TreasuryId, new MoneyCents(1_000_000_00)); // $1,000,000.00
         }
 
-        public void LoadState(Guid id, long tick, Guid treasuryId)
+        public Universe(GlobalExchange exchange, Ledger ledger)
         {
-            Id = id;
-            CurrentTick = new TickIndex(tick);
-            TreasuryId = treasuryId;
-            _plots.Clear(); // Clear default plots if any
+            _exchange = exchange;
+            ActiveGovernment = GovernmentMod.Default;
+            CurrentTick = new TickIndex(0);
+            Ledger = ledger;
         }
 
         public void AddPlot(Plot plot)
@@ -64,133 +57,163 @@ namespace Sovereign.Sim
             _plots.Add(plot);
         }
 
+        private long GetMarketPrice(ResourceType type)
+        {
+            // Fallback to AI prices (Hardcoded for MVP, should be in config)
+            return type switch
+            {
+                ResourceType.Power => 2,
+                ResourceType.Water => 5,
+                ResourceType.Food => 10,
+                ResourceType.Steel => 50,
+                ResourceType.Iron => 15,
+                _ => 100 // Default expensive
+            };
+        }
+
         public void Tick()
         {
-            long treasuryStart = Ledger.GetBalance(TreasuryId).Value;
+            long startTreasury = Ledger.GetBalance(TreasuryId).Value;
 
-            var totalDemand = new Dictionary<ResourceType, long>();
-            var localSupply = new Dictionary<ResourceType, long>();
-            var imports = new Dictionary<ResourceType, long>();
+            TotalDemandLastTick.Clear();
+            TotalSupplyLastTick.Clear();
 
-            // Initialize dictionaries
-            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
-            {
-                totalDemand[type] = 0;
-                localSupply[type] = 0;
-                imports[type] = 0;
-            }
-
-            // 1. Collect Requests & Production
+            // 1. Collect Production & Demands, Pay for Production & Apply Taxes
             foreach (var plot in _plots)
             {
-                if (plot.Consumer != null)
+                if (plot.Consumer != null) // Collect Demands
                 {
-                    var demands = plot.Consumer.GetDemands(CurrentTick);
-                    foreach (var d in demands)
+                    var demands = plot.Consumer.GetResourceDemands(CurrentTick);
+                    foreach (var demand in demands)
                     {
-                        plot.Demands[d.Type] = d.Value;
-                        
-                        // Calculate net request (Gross Demand - Storage)
-                        long inStorage = plot.Storage.ContainsKey(d.Type) ? plot.Storage[d.Type] : 0;
-                        long netRequest = Math.Max(0, d.Value - inStorage);
-                        
-                        totalDemand[d.Type] += netRequest;
+                        plot.Demands[demand.Key] = demand.Value;
+                        if (!TotalDemandLastTick.ContainsKey(demand.Key))
+                            TotalDemandLastTick[demand.Key] = 0;
+                        TotalDemandLastTick[demand.Key] += demand.Value;
                     }
                 }
-                if (plot.Producer != null && plot.InputsSatisfied)
+                if (plot.Producer != null && plot.InputsSatisfied) // Produce if inputs were met
                 {
-                    var products = plot.Producer.Produce(CurrentTick);
-                    foreach (var p in products)
+                    var supplies = plot.Producer.GetProduction(CurrentTick);
+                    long grossIncome = 0;
+                    foreach (var supply in supplies)
                     {
-                        localSupply[p.Type] += p.Value;
-                        // Ledger: Credit the producer's universe (self)
-                        Ledger.CreditResource(Id, p);
+                        if (!TotalSupplyLastTick.ContainsKey(supply.Key))
+                            TotalSupplyLastTick[supply.Key] = 0;
+                        TotalSupplyLastTick[supply.Key] += supply.Value;
+                        Ledger.CreditResource(Id, supply.Key, supply.Value);
+
+                        // NEW: Calculate income from production
+                        grossIncome += supply.Value * GetMarketPrice(supply.Key);
+                    }
+
+                    // NEW: Pay producer and collect taxes
+                    if (grossIncome > 0)
+                    {
+                        // The Universe Treasury buys all production for now. This is a simplification.
+                        if (Ledger.TryDebit(TreasuryId, new MoneyCents(grossIncome)))
+                        {
+                            Ledger.Credit(plot.OwnerId, new MoneyCents(grossIncome));
+
+                            // Apply corporate tax to producers
+                            if (ActiveGovernment.CorporateTaxRate > 0)
+                            {
+                                long taxAmount = (long)(grossIncome * ActiveGovernment.CorporateTaxRate);
+                                if (Ledger.TryDebit(plot.OwnerId, new MoneyCents(taxAmount)))
+                                {
+                                    Ledger.Credit(TreasuryId, new MoneyCents(taxAmount));
+                                }
+                            }
+                        }
                     }
                 }
             }
 
-            // 2. Resolve Supply & Demand per Resource
-            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
+            // NEW PHASE: Fiscal Policy (UBI)
+            if (ActiveGovernment.UniversalBasicIncomeCents > 0)
             {
-                long netValue = localSupply[type] - totalDemand[type];
-
-                if (netValue > 0)
+                foreach (var plot in _plots.Where(p => p.Consumer is House))
                 {
-                    // Surplus: Export
-                    _exchange.ListOffer(new ResourceOffer
+                    var ubi = new MoneyCents(ActiveGovernment.UniversalBasicIncomeCents);
+                    if (Ledger.TryDebit(TreasuryId, ubi))
                     {
-                        SellerUniverseId = Id,
-                        Quantity = new ResourceQuantity(type, netValue),
-                        PricePerUnit = new MoneyCents(1)
-                    });
+                        Ledger.Credit(plot.OwnerId, ubi);
+                    }
                 }
-                else if (netValue < 0)
+            }
+
+            // 2. Resolve Deficits via Import
+            var allResourceTypes = TotalDemandLastTick.Keys.ToList();
+            var demandMet = new Dictionary<ResourceType, bool>();
+
+            foreach (var resource in allResourceTypes)
+            {
+                long totalDemand = TotalDemandLastTick.ContainsKey(resource) ? TotalDemandLastTick[resource] : 0;
+                long localSupply = Ledger.GetResourceBalance(Id, resource);
+                long net = localSupply - totalDemand;
+
+                if (net < 0)
                 {
-                    // Deficit: Import
-                    long deficitValue = -netValue;
-                    long maxPrice = (type == ResourceType.Power) ? 2 : 5;
+                    // Deficit: try to import
+                    long deficitAmount = -net;
+                    var deficit = new ResourceQuantity(resource, deficitAmount);
+                    MoneyCents maxPrice = new MoneyCents(AI_POWER_PRICE_CENTS_PER_WH); // MVP: Willing to pay up to AI price
 
-                    if (_exchange.TryBuy(new ResourceQuantity(type, deficitValue), new MoneyCents(maxPrice), out var offer))
+                    if (_exchange.TryBuy(deficit, maxPrice, out var offer))
                     {
-                        MoneyCents baseCost = new MoneyCents(deficitValue * offer.PricePerUnit.Value);
-                        
-                        // Calculate Logistics
-                        GlobalExchange.CalculateTransport(deficitValue, GlobalExchange.MVP_DISTANCE_KM, out var transportFee, out var loss);
-                        
-                        MoneyCents totalCost = new MoneyCents(baseCost.Value + transportFee.Value);
-
-                        if (Ledger.TryDebit(TreasuryId, totalCost))
+                        MoneyCents cost = new MoneyCents(deficitAmount * offer.PricePerUnit.Value);
+                        if (Ledger.TryDebit(TreasuryId, cost))
                         {
-                            imports[type] = deficitValue - loss; // Receive less due to loss
-                            
-                            // Credit seller (Cross-Universe Settlement)
-                            if (offer.SellerUniverseId != Guid.Empty)
-                            {
-                                Ledger.Credit(offer.SellerUniverseId, baseCost);
-                            }
-                            
-                            // Transport fee is burned (paid to "logistics provider" / sink)
+                            // Bought from Exchange or AI, credit to universe account
+                            Ledger.CreditResource(Id, resource, deficitAmount);
+                            demandMet[resource] = true;
+                        }
+                        else
+                        {
+                            demandMet[resource] = false; // Cannot afford import
                         }
                     }
+                    else
+                    {
+                        demandMet[resource] = false; // No offer available
+                    }
+                }
+                else
+                {
+                    demandMet[resource] = true; // Local supply is sufficient
                 }
             }
 
             // 3. Distribute & Update Plots
             foreach (var plot in _plots)
             {
-                foreach (ResourceType type in plot.Demands.Keys)
+                foreach (var demand in plot.Demands)
                 {
-                    long available = localSupply[type] + imports[type];
-                    long demand = totalDemand[type];
-                    
-                    if (available >= demand)
+                    if (demandMet.TryGetValue(demand.Key, out bool met) && met)
                     {
-                        plot.Deliveries[type] = plot.Demands[type];
-                    }
-                    else if (demand > 0)
-                    {
-                        double ratio = (double)available / demand;
-                        plot.Deliveries[type] = (long)(plot.Demands[type] * ratio);
+                        if (Ledger.TryDebitResource(Id, demand.Key, demand.Value))
+                        {
+                            plot.Deliveries[demand.Key] = demand.Value;
+                            if (!plot.Storage.ContainsKey(demand.Key)) plot.Storage[demand.Key] = 0;
+                            plot.Storage[demand.Key] += demand.Value;
+                        }
                     }
                 }
-
                 plot.OnTick();
             }
 
-            // 4. Update Metrics
-            TotalDemandLastTick = new Dictionary<ResourceType, long>(totalDemand);
-            // Supply = Local + Imports
-            var totalSupply = new Dictionary<ResourceType, long>();
-            foreach (ResourceType type in Enum.GetValues(typeof(ResourceType)))
-            {
-                totalSupply[type] = localSupply[type] + imports[type];
-            }
-            TotalSupplyLastTick = totalSupply;
-
-            long treasuryEnd = Ledger.GetBalance(TreasuryId).Value;
-            NetTreasuryChangeLastTick = treasuryEnd - treasuryStart;
-
+            // 4. Advance Tick
+            long endTreasury = Ledger.GetBalance(TreasuryId).Value;
+            NetTreasuryChangeLastTick = endTreasury - startTreasury;
+            LastMarketSnapshot = _exchange.GetSnapshot(CurrentTick.Value);
             CurrentTick++;
+        }
+
+        public void LoadState(Guid id, long currentTick, Guid treasuryId)
+        {
+            Id = id;
+            CurrentTick = new TickIndex(currentTick);
+            TreasuryId = treasuryId;
         }
     }
 }

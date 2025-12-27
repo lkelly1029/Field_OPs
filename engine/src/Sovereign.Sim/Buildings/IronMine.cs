@@ -1,15 +1,16 @@
 using Sovereign.Core;
 using Sovereign.Core.Primitives;
+using System.Collections.Generic;
 
 namespace Sovereign.Sim.Buildings
 {
     public class IronMine : IProducer, IConsumer
     {
-        public ResourceQuantity[] GetDemands(TickIndex tick)
+        public Dictionary<ResourceType, long> GetResourceDemands(TickIndex tick)
         {
-            return new[]
+            return new Dictionary<ResourceType, long>
             {
-                new ResourceQuantity(ResourceType.Power, 2000) // 2000 Wh to run the drills
+                { ResourceType.Power, 2000 } // 2000 Wh to run the drills
             };
         }
 
@@ -21,11 +22,11 @@ namespace Sovereign.Sim.Buildings
             };
         }
 
-        public ResourceQuantity[] Produce(TickIndex tick)
+        public Dictionary<ResourceType, long> GetProduction(TickIndex tick)
         {
-            return new[]
+            return new Dictionary<ResourceType, long>
             {
-                new ResourceQuantity(ResourceType.Iron, 200) // 200 Tonnes
+                { ResourceType.Iron, 200 } // 200 Tonnes
             };
         }
     }

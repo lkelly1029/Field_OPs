@@ -1,10 +1,11 @@
+using Sovereign.Core;
 using Sovereign.Core.Primitives;
+using System.Collections.Generic;
 
 namespace Sovereign.Sim
 {
     public interface IConsumer
     {
-        ResourceQuantity[] GetDemands(TickIndex tick);
-        ResourceQuantity[] GetStorageCaps();
+        Dictionary<ResourceType, long> GetResourceDemands(TickIndex tick);
     }
 }

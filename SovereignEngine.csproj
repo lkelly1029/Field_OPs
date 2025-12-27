@@ -48,6 +48,7 @@
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.3.2f1\Editor\Data\Tools\BuildPipeline\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="engine\src\Sovereign.Core\Commands\BuildCommand.cs" />
     <Compile Include="engine\src\Sovereign.Core\TickIndex.cs" />
     <Compile Include="engine\src\simulation\TickIndex.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\Farm.cs" />
@@ -59,13 +60,16 @@
     <Compile Include="engine\src\Sovereign.Core\ResourceType.cs" />
     <Compile Include="engine\src\Sovereign.Core\MoneyCents.cs" />
     <Compile Include="engine\src\world\Plot.cs" />
+    <Compile Include="engine\src\Sovereign.Core\Commands\ICommand.cs" />
     <Compile Include="engine\src\Sovereign.Core\EnergyWh.cs" />
     <Compile Include="engine\src\Sovereign.Economy\GlobalExchange.cs" />
+    <Compile Include="engine\src\Sovereign.Sim\Serialization\UniverseSerializer.cs" />
     <Compile Include="engine\src\contracts\IConsumer.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Universe.cs" />
     <Compile Include="engine\src\consumers\House.cs" />
     <Compile Include="engine\src\contracts\IProducer.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\SteelMill.cs" />
+    <Compile Include="engine\src\Sovereign.Economy\MarketSnapshot.cs" />
     <Compile Include="engine\src\Sovereign.Sim\IConsumer.cs" />
     <Compile Include="engine\src\Sovereign.Core\ResourceQuantity.cs" />
     <Compile Include="engine\src\Sovereign.Sim\Buildings\House.cs" />

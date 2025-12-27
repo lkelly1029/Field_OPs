@@ -31,7 +31,7 @@ namespace SovereignState.Unity.SimBridge
             Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                var renderer = FindObjectOfType<PlotRenderer>();
+                var renderer = FindFirstObjectByType<PlotRenderer>();
                 if (renderer == null) return;
 
                 float spacing = renderer.spacing;
@@ -65,7 +65,7 @@ namespace SovereignState.Unity.SimBridge
                 // We need to find which X,Y this corresponds to.
                 // For MVP, simple math based on position is robust.
                 
-                var renderer = FindObjectOfType<PlotRenderer>();
+                var renderer = FindFirstObjectByType<PlotRenderer>();
                 if (renderer == null) return;
 
                 float spacing = renderer.spacing;
@@ -78,23 +78,20 @@ namespace SovereignState.Unity.SimBridge
                 var universe = runner.GetUniverse();
                 if (universe == null) return;
 
-using Sovereign.Core.Commands;
-
-// ...
-
                 var plot = universe.Plots.FirstOrDefault(p => p.X == x && p.Y == y);
                 if (plot != null)
                 {
-                    string selected = BuildingManager.Instance?.SelectedBuilding ?? "None";
-                    
-                    if (selected == "None") return;
-
-                    PlotState nextState = selected == "Clear" ? PlotState.Empty : PlotState.Active;
-                    
-                    var cmd = new BuildCommand(x, y, nextState, selected);
-                    universe.ProcessCommand(cmd);
-                    
-                    Debug.Log($"Sent BuildCommand for ({x}, {y}) -> {selected}");
+                    // TODO: Implement BuildingManager and Commands
+                    // string selected = BuildingManager.Instance?.SelectedBuilding ?? "None";
+                    // 
+                    // if (selected == "None") return;
+                    //
+                    // PlotState nextState = selected == "Clear" ? PlotState.Empty : PlotState.Active;
+                    // 
+                    // var cmd = new BuildCommand(x, y, nextState, selected);
+                    // universe.ProcessCommand(cmd);
+                    // 
+                    // Debug.Log($"Sent BuildCommand for ({x}, {y}) -> {selected}");
                 }
             }
         }

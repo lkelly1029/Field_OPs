@@ -1,17 +1,18 @@
 using Sovereign.Core;
 using Sovereign.Core.Primitives;
+using System.Collections.Generic;
 
 namespace Sovereign.Sim.Buildings
 {
     public class House : IConsumer
     {
-        public ResourceQuantity[] GetDemands(TickIndex tick)
+        public Dictionary<ResourceType, long> GetResourceDemands(TickIndex tick)
         {
-            return new[]
+            return new Dictionary<ResourceType, long>
             {
-                new ResourceQuantity(ResourceType.Power, 1000), 
-                new ResourceQuantity(ResourceType.Water, 100),   
-                new ResourceQuantity(ResourceType.Food, 50)      
+                { ResourceType.Power, 1000 },
+                { ResourceType.Water, 100 },
+                { ResourceType.Food, 50 }
             };
         }
 

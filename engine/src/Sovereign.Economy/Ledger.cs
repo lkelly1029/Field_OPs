@@ -7,33 +7,24 @@ namespace Sovereign.Economy
 {
     public class Ledger
     {
-        private readonly Dictionary<Guid, MoneyCents> _monetaryBalances = new();
+        private readonly Dictionary<Guid, MoneyCents> _balances = new();
         private readonly Dictionary<ResourceType, Dictionary<Guid, long>> _resourceBalances = new();
 
-        public IReadOnlyDictionary<Guid, MoneyCents> MonetaryBalances => _monetaryBalances;
+        public IReadOnlyDictionary<Guid, MoneyCents> MonetaryBalances => _balances;
         public IReadOnlyDictionary<ResourceType, Dictionary<Guid, long>> ResourceBalances => _resourceBalances;
-
-        public void LoadState(Dictionary<Guid, MoneyCents> monetary, Dictionary<ResourceType, Dictionary<Guid, long>> resources)
-        {
-            _monetaryBalances.Clear();
-            foreach (var kvp in monetary) _monetaryBalances[kvp.Key] = kvp.Value;
-
-            _resourceBalances.Clear();
-            foreach (var kvp in resources) _resourceBalances[kvp.Key] = kvp.Value;
-        }
 
         public MoneyCents GetBalance(Guid accountId)
         {
-            return _monetaryBalances.ContainsKey(accountId) ? _monetaryBalances[accountId] : new MoneyCents(0);
+            return _balances.ContainsKey(accountId) ? _balances[accountId] : new MoneyCents(0);
         }
 
         public void Credit(Guid accountId, MoneyCents amount)
         {
-            if (!_monetaryBalances.ContainsKey(accountId))
+            if (!_balances.ContainsKey(accountId))
             {
-                _monetaryBalances[accountId] = new MoneyCents(0);
+                _balances[accountId] = new MoneyCents(0);
             }
-            _monetaryBalances[accountId] = new MoneyCents(_monetaryBalances[accountId].Value + amount.Value);
+            _balances[accountId] = new MoneyCents(_balances[accountId].Value + amount.Value);
         }
 
         public bool TryDebit(Guid accountId, MoneyCents amount)
@@ -41,47 +32,51 @@ namespace Sovereign.Economy
             var balance = GetBalance(accountId);
             if (balance.Value >= amount.Value)
             {
-                _monetaryBalances[accountId] = new MoneyCents(balance.Value - amount.Value);
+                _balances[accountId] = new MoneyCents(balance.Value - amount.Value);
                 return true;
             }
             return false;
         }
 
-        // --- Resource Methods ---
-
         public long GetResourceBalance(Guid accountId, ResourceType type)
         {
-            if (_resourceBalances.TryGetValue(type, out var balances))
+            if (_resourceBalances.TryGetValue(type, out var balances) && balances.TryGetValue(accountId, out var balance))
             {
-                return balances.TryGetValue(accountId, out var balance) ? balance : 0;
+                return balance;
             }
             return 0;
         }
 
-        public void CreditResource(Guid accountId, ResourceQuantity quantity)
+        public void CreditResource(Guid accountId, ResourceType type, long amount)
         {
-            if (!_resourceBalances.TryGetValue(quantity.Type, out var balances))
+            if (!_resourceBalances.ContainsKey(type))
             {
-                balances = new Dictionary<Guid, long>();
-                _resourceBalances[quantity.Type] = balances;
+                _resourceBalances[type] = new Dictionary<Guid, long>();
             }
-
-            if (!balances.ContainsKey(accountId))
+            if (!_resourceBalances[type].ContainsKey(accountId))
             {
-                balances[accountId] = 0;
+                _resourceBalances[type][accountId] = 0;
             }
-            balances[accountId] += quantity.Value;
+            _resourceBalances[type][accountId] += amount;
         }
 
-        public bool TryDebitResource(Guid accountId, ResourceQuantity quantity)
+        public bool TryDebitResource(Guid accountId, ResourceType type, long amount)
         {
-            var balance = GetResourceBalance(accountId, quantity.Type);
-            if (balance >= quantity.Value)
+            long balance = GetResourceBalance(accountId, type);
+            if (balance >= amount)
             {
-                _resourceBalances[quantity.Type][accountId] = balance - quantity.Value;
+                _resourceBalances[type][accountId] = balance - amount;
                 return true;
             }
             return false;
+        }
+
+        public void LoadState(IReadOnlyDictionary<Guid, MoneyCents> monetaryBalances, IReadOnlyDictionary<ResourceType, Dictionary<Guid, long>> resourceBalances)
+        {
+            _balances.Clear();
+            foreach (var kvp in monetaryBalances) _balances[kvp.Key] = kvp.Value;
+            _resourceBalances.Clear();
+            if (resourceBalances != null) foreach (var kvp in resourceBalances) _resourceBalances[kvp.Key] = new Dictionary<Guid, long>(kvp.Value);
         }
     }
 }

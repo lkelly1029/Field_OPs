@@ -3,8 +3,8 @@ using Sovereign.Sim;
 using Sovereign.Economy;
 using Sovereign.Core; 
 using Sovereign.Core.Primitives;
-using Sovereign.Sim.Serialization;
 using System.Collections.Generic;
+using Sovereign.Sim.Serialization;
 using System.IO;
 
 namespace SovereignState.Unity.SimBridge
@@ -36,7 +36,7 @@ namespace SovereignState.Unity.SimBridge
                 metrics["Net Change"] = $"{_universe.NetTreasuryChangeLastTick:+#;-#;0} cents";
                 
                 // Resource Metrics
-                foreach (var type in new[] { ResourceType.Power, ResourceType.Water, ResourceType.Food, ResourceType.Steel, ResourceType.Iron })
+                foreach (ResourceType type in System.Enum.GetValues(typeof(ResourceType)))
                 {
                     long demand = _universe.TotalDemandLastTick.ContainsKey(type) ? _universe.TotalDemandLastTick[type] : 0;
                     long supply = _universe.TotalSupplyLastTick.ContainsKey(type) ? _universe.TotalSupplyLastTick[type] : 0;

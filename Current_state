@@ -1,9 +1,5 @@
 # Current Project State
 
-## Project Status (from STATUS.md)
-
-# STATUS.md
-
 ## 1. Findings (Factual Inventory)
 
 ### Control Layer
@@ -12,7 +8,7 @@
 - **Alignment**: Control file matches Brief requirements [EXISTS]
 
 ### Engine Layer
-- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim` projects [EXISTS]
+- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim`, `Sovereign.Mods` projects [EXISTS]
 - **Scenarios**: `PowerAcceptance.cs`, `WaterAcceptance.cs`, `IntegrationAcceptance.cs`, `IndustrialAcceptance.cs`, `SerializationAcceptance.cs` [EXISTS]
 - **Legacy Artifacts**: `engine/src/world`, `simulation`, etc [BLOCKED - Shell Restricted] - Marked with NOTICE file.
 - **Multi-Resource Support**: **IMPLEMENTED**.
@@ -31,6 +27,7 @@
 - **Logistics**: **IMPLEMENTED**.
 - **Commands**: **IMPLEMENTED**.
 - **Persistence**: **IMPLEMENTED**.
+- **Government Modifiers (M4)**: **IMPLEMENTED**.
 
 ### Unity Layer
 - **Dev Console UI**: `Assets/Scripts/DevTools/SovereignDevConsoleOverlay.cs` [UPDATED]. Includes Sim/Persistence Controls and **Hover Tooltips**.
@@ -61,6 +58,40 @@
 
 ## File Structure
 
+C:\Users\trulu\Field_OPs\cleanup_legacy.ps1
+C:\Users\trulu\Field_OPs\control\sovereign_state_control.yaml
+C:\Users\trulu\Field_OPs\Current_state
+C:\Users\trulu\Field_OPs\engine\Sovereign.Engine.sln
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\Commands\BuildCommand.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\ResourceDefinition.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Core\ResourceType.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\GlobalExchange.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\Ledger.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Economy\MarketSnapshot.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\GovernmentMod.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\ModLoader.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\Sovereign.Mods.csproj
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Scenarios\IndustrialAcceptance.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Scenarios\IntegrationAcceptance.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Scenarios\PowerAcceptance.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Scenarios\SerializationAcceptance.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Scenarios\WaterAcceptance.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\Farm.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\House.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\IronMine.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\NuclearPlant.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\SteelMill.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Buildings\WaterPump.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\IConsumer.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\IProducer.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Plot.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Serialization\UniverseSerializer.cs
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Sovereign.Sim.csproj
+C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Universe.cs
+C:\Users\trulu\Field_OPs\GEMINI_AGENT_BRIEF.md
+C:\Users\trulu\Field_OPs\project_structure.txt
+C:\Users\trulu\Field_OPs\run_guardrails.ps1
+C:\Users\trulu\Field_OPs\STATUS.md
 C:\Users\trulu\Field_OPs\Assets\Scripts\DevTools\SovereignDevConsoleOverlay.cs
 C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\PlotClicker.cs
 C:\Users\trulu\Field_OPs\Assets\Scripts\SimBridge\TooltipManager.cs

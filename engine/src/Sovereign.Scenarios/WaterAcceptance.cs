@@ -16,7 +16,7 @@ namespace Sovereign.Tests.Scenarios
             var universe = new Universe();
             var initialTreasury = universe.Ledger.GetBalance(universe.TreasuryId);
 
-            var plot = new Plot { State = PlotState.Built };
+            var plot = new Plot { State = PlotState.Active };
             plot.Consumer = new Farm(); // Consumes 500 Water
             universe.AddPlot(plot);
 
@@ -35,7 +35,7 @@ namespace Sovereign.Tests.Scenarios
             var universe = new Universe();
             var initialTreasury = universe.Ledger.GetBalance(universe.TreasuryId);
 
-            var farmPlot = new Plot { State = PlotState.Built };
+            var farmPlot = new Plot { State = PlotState.Active };
             farmPlot.Consumer = new Farm(); 
             universe.AddPlot(farmPlot);
 
@@ -48,6 +48,34 @@ namespace Sovereign.Tests.Scenarios
             // Local supply (1000) > Demand (500). No imports.
             var currentTreasury = universe.Ledger.GetBalance(universe.TreasuryId);
             Assert.Equal(initialTreasury, currentTreasury);
+        }
+
+        [Fact]
+        public void WaterExport_Displacement()
+        {
+            var exchange = new GlobalExchange();
+            var universeA = new Universe(exchange);
+
+            // Universe A produces surplus water
+            var pumpPlot = new Plot { State = PlotState.Active };
+            pumpPlot.Producer = new WaterPump(); // 1000 Water
+            universeA.AddPlot(pumpPlot);
+
+            // Universe A ticks to list surplus
+            universeA.Tick();
+
+            // Universe B needs water. 
+            // AI Price is 5.
+            // Universe A lists at 1 (default logic in Universe.Tick for surplus).
+            var bought = exchange.TryBuy(
+                new ResourceQuantity(ResourceType.Water, 500), 
+                new MoneyCents(5), // Max price (AI price)
+                out var offer
+            );
+
+            Assert.True(bought, "Should buy from exchange");
+            Assert.Equal(universeA.Id, offer.SellerUniverseId);
+            Assert.Equal(1, offer.PricePerUnit.Value);
         }
     }
 }

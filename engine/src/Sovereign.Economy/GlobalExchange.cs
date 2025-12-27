@@ -75,5 +75,27 @@ namespace Sovereign.Economy
             double lossRatio = (distanceKm / 100.0) * LOSS_PER_100KM;
             loss = (long)(quantity * lossRatio);
         }
+
+        public MarketSnapshot GetSnapshot(long tick)
+        {
+            var snapshot = new MarketSnapshot { Tick = tick };
+
+            foreach (var kvp in _bestOffers)
+            {
+                var offer = kvp.Value;
+                var metrics = new ResourceMarketMetrics
+                {
+                    BestPrice = offer.PricePerUnit,
+                    TotalVolume = offer.Quantity.Value,
+                    OfferCount = 1,
+                    AiSharePct = 0,
+                    PlayerSharePct = 100
+                };
+                metrics.TopOffers.Add(offer);
+                snapshot.Metrics[kvp.Key] = metrics;
+            }
+
+            return snapshot;
+        }
     }
 }

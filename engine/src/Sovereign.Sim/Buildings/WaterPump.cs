@@ -1,15 +1,16 @@
 using Sovereign.Core;
 using Sovereign.Core.Primitives;
+using System.Collections.Generic;
 
 namespace Sovereign.Sim.Buildings
 {
     public class WaterPump : IProducer
     {
-        public ResourceQuantity[] Produce(TickIndex tick)
+        public Dictionary<ResourceType, long> GetProduction(TickIndex tick)
         {
-            return new[]
+            return new Dictionary<ResourceType, long>
             {
-                new ResourceQuantity(ResourceType.Water, 1000) // 1000 Liters
+                { ResourceType.Water, 1000 } // 1000 Liters
             };
         }
     }

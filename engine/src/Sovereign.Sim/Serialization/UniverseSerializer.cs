@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Sovereign.Serialization
+namespace Sovereign.Sim.Serialization
 {
     public class UniverseState
     {
@@ -24,6 +24,7 @@ namespace Sovereign.Serialization
     {
         public int X { get; set; }
         public int Y { get; set; }
+        public Guid OwnerId { get; set; }
         public PlotState State { get; set; }
         public double Stability { get; set; }
         public Dictionary<ResourceType, long> Storage { get; set; }
@@ -54,7 +55,7 @@ namespace Sovereign.Serialization
                 Ledger = new LedgerStateDTO
                 {
                     MonetaryBalances = new Dictionary<Guid, MoneyCents>(universe.Ledger.MonetaryBalances),
-                    ResourceBalances = new Dictionary<ResourceType, Dictionary<Guid, long>>(universe.Ledger.ResourceBalances)
+                    ResourceBalances = universe.Ledger.ResourceBalances.ToDictionary(k => k.Key, v => new Dictionary<Guid, long>(v.Value))
                 }
             };
 
@@ -64,6 +65,7 @@ namespace Sovereign.Serialization
                 {
                     X = plot.X,
                     Y = plot.Y,
+                    OwnerId = plot.OwnerId,
                     State = plot.State,
                     Stability = plot.Stability,
                     Storage = new Dictionary<ResourceType, long>(plot.Storage),
@@ -84,7 +86,7 @@ namespace Sovereign.Serialization
             var state = JsonSerializer.Deserialize<UniverseState>(json, options);
 
             var ledger = new Ledger();
-            ledger.LoadState(state.Ledger.MonetaryBalances, state.Ledger.ResourceBalances);
+            ledger.LoadState(state.Ledger.MonetaryBalances, state.Ledger.ResourceBalances.ToDictionary(k => k.Key, v => new Dictionary<Guid, long>(v.Value)));
 
             // We need a way to construct Universe with specific ID/TreasuryID/Tick?
             // Universe constructor generates new IDs.
@@ -102,6 +104,7 @@ namespace Sovereign.Serialization
                 {
                     X = pDto.X,
                     Y = pDto.Y,
+                    OwnerId = pDto.OwnerId,
                     State = pDto.State,
                     Stability = pDto.Stability
                 };
