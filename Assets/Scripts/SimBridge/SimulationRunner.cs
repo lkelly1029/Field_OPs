@@ -5,6 +5,7 @@ using Sovereign.Core;
 using Sovereign.Core.Primitives;
 using System.Collections.Generic;
 using Sovereign.Sim.Serialization;
+using Sovereign.Sim.Commands;
 using System.IO;
 using System;
 
@@ -28,6 +29,13 @@ namespace SovereignState.Unity.SimBridge
         public long TreasuryCents => _universe?.Ledger?.GetBalance(_universe.TreasuryId).Value ?? 0;
 
         public Universe GetUniverse() => _universe;
+
+        public void UpdateGovernment(long? ubi = null, double? corpTax = null)
+        {
+            if (_universe == null) return;
+            var cmd = new UpdateGovernmentCommand(ubi, corpTax);
+            cmd.Execute(_universe);
+        }
 
         public Dictionary<string, string> GetDebugMetrics()
         {

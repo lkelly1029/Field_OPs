@@ -57,22 +57,10 @@ namespace Sovereign.Sim
             _plots.Add(plot);
         }
 
-        private long GetMarketPrice(ResourceType type)
-        {
-            // Fallback to AI prices (Hardcoded for MVP, should be in config)
-            return type switch
-            {
-                ResourceType.Power => 2,
-                ResourceType.Water => 5,
-                ResourceType.Food => 10,
-                ResourceType.Steel => 50,
-                ResourceType.Iron => 15,
-                _ => 100 // Default expensive
-            };
-        }
-
         public void Tick()
         {
+            _exchange.Tick(); // Update Market Prices
+
             long startTreasury = Ledger.GetBalance(TreasuryId).Value;
 
             TotalDemandLastTick.Clear();
@@ -104,12 +92,14 @@ namespace Sovereign.Sim
                         Ledger.CreditResource(Id, supply.Key, supply.Value);
                         
                         // NEW: Calculate income from production
-                        grossIncome += supply.Value * GetMarketPrice(supply.Key);
+                        grossIncome += supply.Value * _exchange.GetAiPrice(supply.Key);
                     }
 
                     // NEW: Pay producer and collect taxes
                     if (grossIncome > 0)
                     {
+                        plot.LastTickIncome = grossIncome; // Track stats
+
                         // The Universe Treasury buys all production for now. This is a simplification.
                         if (Ledger.TryDebit(TreasuryId, new MoneyCents(grossIncome)))
                         {
@@ -122,9 +112,28 @@ namespace Sovereign.Sim
                                 if (Ledger.TryDebit(plot.OwnerId, new MoneyCents(taxAmount)))
                                 {
                                     Ledger.Credit(TreasuryId, new MoneyCents(taxAmount));
+                                    plot.LastTickTaxPaid = taxAmount; // Track stats
                                 }
                             }
+                            else
+                            {
+                                plot.LastTickTaxPaid = 0;
+                            }
                         }
+                    }
+                    else
+                    {
+                        plot.LastTickIncome = 0;
+                        plot.LastTickTaxPaid = 0;
+                    }
+                }
+                else
+                {
+                    // Reset stats if not producing
+                    if (plot.Producer != null)
+                    {
+                        plot.LastTickIncome = 0;
+                        plot.LastTickTaxPaid = 0;
                     }
                 }
             }
@@ -157,7 +166,7 @@ namespace Sovereign.Sim
                     // Deficit: try to import
                     long deficitAmount = -net;
                     var deficit = new ResourceQuantity(resource, deficitAmount);
-                    MoneyCents maxPrice = new MoneyCents(GetMarketPrice(resource)); // MVP: Willing to pay up to AI price
+                    MoneyCents maxPrice = new MoneyCents(_exchange.GetAiPrice(resource)); // MVP: Willing to pay up to AI price
 
                     if (_exchange.TryBuy(deficit, maxPrice, out var offer))
                     {
@@ -194,7 +203,7 @@ namespace Sovereign.Sim
                         if (Ledger.TryDebitResource(Id, demand.Key, demand.Value))
                         {
                             // NEW: Consumer Pays Treasury
-                            long price = GetMarketPrice(demand.Key);
+                            long price = _exchange.GetAiPrice(demand.Key);
                             long costValue = demand.Value * price;
                             var cost = new MoneyCents(costValue);
 
@@ -219,7 +228,7 @@ namespace Sovereign.Sim
                 {
                     // List surplus. Price? Undercut AI slightly? Or match?
                     // MVP: List at 1 cent below AI price to guarantee sales.
-                    long marketPrice = GetMarketPrice(type);
+                    long marketPrice = _exchange.GetAiPrice(type);
                     long offerPrice = Math.Max(1, marketPrice - 1); 
                     
                     var offer = new ResourceOffer

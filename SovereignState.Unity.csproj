@@ -50,8 +50,8 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\SimBridge\TooltipManager.cs" />
     <Compile Include="Assets\Scripts\SimBridge\SimulationRunner.cs" />
+    <Compile Include="Assets\Scripts\DevTools\GameDashboard.cs" />
     <Compile Include="Assets\Scripts\Integrations\Supabase\SupabaseManager.cs" />
-    <Compile Include="Assets\Scripts\DevTools\SovereignDevConsoleOverlay.cs" />
     <Compile Include="Assets\Scripts\SimBridge\PlotClicker.cs" />
     <Compile Include="Assets\Scripts\DevTools\CameraController.cs" />
     <Compile Include="Assets\Scripts\SimBridge\BuildingManager.cs" />

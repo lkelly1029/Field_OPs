@@ -15,10 +15,46 @@ namespace Sovereign.Economy
     public class GlobalExchange
     {
         private readonly Dictionary<ResourceType, ResourceOffer> _bestOffers = new();
+        private readonly Dictionary<ResourceType, long> _aiPrices = new();
+        private readonly Random _random = new Random();
 
         public const int MVP_DISTANCE_KM = 100;
         public const double LOSS_PER_100KM = 0.01; // 1%
         public const long FEE_CENTS_PER_10KM_UNIT = 1;
+
+        public GlobalExchange()
+        {
+            // Initialize Base Prices
+            _aiPrices[ResourceType.Power] = 2;
+            _aiPrices[ResourceType.Water] = 5;
+            _aiPrices[ResourceType.Food] = 10;
+            _aiPrices[ResourceType.Steel] = 50;
+            _aiPrices[ResourceType.Iron] = 15;
+        }
+
+        public void Tick()
+        {
+            // Simulate Volatility (Random Walk)
+            // Create a list of keys to avoid modification errors
+            var keys = new List<ResourceType>(_aiPrices.Keys);
+            foreach (var type in keys)
+            {
+                long current = _aiPrices[type];
+                // Fluctuate by -1, 0, or +1
+                int delta = _random.Next(-1, 2); 
+                
+                // 10% Chance of larger shock (-5 to +5)
+                if (_random.NextDouble() < 0.1) delta = _random.Next(-5, 6);
+
+                long next = Math.Max(1, current + delta);
+                _aiPrices[type] = next;
+            }
+        }
+
+        public long GetAiPrice(ResourceType type)
+        {
+            return _aiPrices.TryGetValue(type, out long price) ? price : 100;
+        }
 
         public void ListOffer(ResourceOffer offer)
         {
@@ -38,16 +74,8 @@ namespace Sovereign.Economy
                 return true;
             }
 
-            // 2. Fallback to AI (Hardcoded for MVP, should be in config)
-            long aiPriceValue = type switch
-            {
-                ResourceType.Power => 2,
-                ResourceType.Water => 5,
-                ResourceType.Food => 10,
-                ResourceType.Steel => 50,
-                ResourceType.Iron => 15,
-                _ => 100 // Default expensive
-            };
+            // 2. Fallback to AI (Dynamic Prices)
+            long aiPriceValue = GetAiPrice(type);
             var aiPrice = new MoneyCents(aiPriceValue);
 
             if (aiPrice.Value <= maxPrice.Value)

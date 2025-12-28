@@ -34,6 +34,10 @@ namespace Sovereign.Sim
 
         public bool InputsSatisfied { get; private set; } = true;
 
+        // Economic Stats
+        public long LastTickIncome { get; set; }
+        public long LastTickTaxPaid { get; set; }
+
         private int _ticksInShortage;
 
         private const double StabilityDecayRate = 5.0;
