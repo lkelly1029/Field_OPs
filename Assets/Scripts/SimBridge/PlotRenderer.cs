@@ -1,5 +1,6 @@
 using UnityEngine;
 using Sovereign.Sim;
+using Sovereign.Sim.Buildings;
 using System.Collections.Generic;
 
 namespace SovereignState.Unity.SimBridge
@@ -8,57 +9,63 @@ namespace SovereignState.Unity.SimBridge
     {
         public SimulationRunner runner;
         public GameObject plotPrefab; 
-        public int width = 10;
-        public int height = 10;
         public float spacing = 1.1f;
 
         private Dictionary<Vector2Int, GameObject> _plotObjects = new Dictionary<Vector2Int, GameObject>();
+        private bool _gridGenerated = false;
 
         void Start()
         {
             if (runner != null)
             {
-                InitializeUniverseGrid();
+                runner.OnUniverseLoaded += OnUniverseReset;
             }
-            GenerateVisualGrid();
         }
 
-        void InitializeUniverseGrid()
+        void OnDestroy()
         {
-            var universe = runner.GetUniverse();
-            if (universe == null) return;
-
-            // Clear any existing plots in universe to ensure match
-            // (In a real scenario, we'd load existing plots)
-            for (int x = 0; x < width; x++)
+            if (runner != null)
             {
-                for (int y = 0; y < height; y++)
-                {
-                    universe.AddPlot(new Plot { X = x, Y = y, State = PlotState.Empty });
-                }
+                runner.OnUniverseLoaded -= OnUniverseReset;
             }
+        }
+
+        private void OnUniverseReset()
+        {
+            ClearVisuals();
+            _gridGenerated = false;
+        }
+
+        private void ClearVisuals()
+        {
+            foreach (var kvp in _plotObjects)
+            {
+                if (kvp.Value != null) Destroy(kvp.Value);
+            }
+            _plotObjects.Clear();
         }
 
         void GenerateVisualGrid()
         {
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < height; y++)
-                {
-                    Vector3 pos = new Vector3(x * spacing, 0, y * spacing);
-                    GameObject obj = plotPrefab != null 
-                        ? Instantiate(plotPrefab, pos, Quaternion.identity, transform)
-                        : GameObject.CreatePrimitive(PrimitiveType.Cube);
-                    
-                    if (plotPrefab == null)
-                    {
-                        obj.transform.position = pos;
-                        obj.transform.parent = transform;
-                    }
+            var universe = runner.GetUniverse();
+            if (universe == null) return;
 
-                    _plotObjects[new Vector2Int(x, y)] = obj;
+            foreach (var plot in universe.Plots)
+            {
+                Vector3 pos = new Vector3(plot.X * spacing, 0, plot.Y * spacing);
+                GameObject obj = plotPrefab != null 
+                    ? Instantiate(plotPrefab, pos, Quaternion.identity, transform)
+                    : GameObject.CreatePrimitive(PrimitiveType.Cube);
+                
+                if (plotPrefab == null)
+                {
+                    obj.transform.position = pos;
+                    obj.transform.parent = transform;
                 }
+
+                _plotObjects[new Vector2Int(plot.X, plot.Y)] = obj;
             }
+            _gridGenerated = true;
         }
 
         void Update()
@@ -66,35 +73,46 @@ namespace SovereignState.Unity.SimBridge
             var universe = runner?.GetUniverse();
             if (universe == null) return;
 
+            if (!_gridGenerated)
+            {
+                GenerateVisualGrid();
+            }
+
             foreach (var plot in universe.Plots)
             {
-                UpdatePlotVisual(new Vector2Int(plot.X, plot.Y), plot.State);
+                UpdatePlotVisual(plot);
             }
         }
         
-        public void UpdatePlotVisual(Vector2Int coord, PlotState state)
+        public void UpdatePlotVisual(Plot plot)
         {
+            var coord = new Vector2Int(plot.X, plot.Y);
             if (_plotObjects.TryGetValue(coord, out var obj))
             {
                 var renderer = obj.GetComponent<Renderer>();
                 if (renderer != null)
                 {
-                    renderer.material.color = GetColorForState(state);
+                    renderer.material.color = GetColorForPlot(plot);
                 }
             }
         }
 
-        private Color GetColorForState(PlotState state)
+        private Color GetColorForPlot(Plot plot)
         {
-            switch (state)
-            {
-                case PlotState.Empty: return Color.gray;
-                case PlotState.Built: return Color.blue;
-                case PlotState.Active: return Color.green;
-                case PlotState.Slum: return Color.yellow;
-                case PlotState.Abandoned: return Color.red;
-                default: return Color.white;
-            }
+            if (plot.State == PlotState.Empty) return Color.gray;
+            if (plot.State == PlotState.Slum) return new Color(0.6f, 0.4f, 0.2f); // Brown
+            if (plot.State == PlotState.Abandoned) return Color.red;
+
+            // Active/Built: Check content
+            if (plot.Producer is NuclearPlant) return Color.magenta;
+            if (plot.Producer is WaterPump) return Color.cyan;
+            if (plot.Producer is IronMine) return new Color(0.8f, 0.5f, 0.5f); // Rust
+            if (plot.Producer is SteelMill) return Color.black;
+            
+            if (plot.Consumer is House) return Color.green;
+            if (plot.Consumer is Farm) return new Color(1f, 0.8f, 0.4f); // Wheat
+
+            return Color.white; // Generic
         }
     }
 }

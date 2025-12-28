@@ -102,7 +102,7 @@ namespace Sovereign.Sim
                             TotalSupplyLastTick[supply.Key] = 0;
                         TotalSupplyLastTick[supply.Key] += supply.Value;
                         Ledger.CreditResource(Id, supply.Key, supply.Value);
-
+                        
                         // NEW: Calculate income from production
                         grossIncome += supply.Value * GetMarketPrice(supply.Key);
                     }
@@ -157,7 +157,7 @@ namespace Sovereign.Sim
                     // Deficit: try to import
                     long deficitAmount = -net;
                     var deficit = new ResourceQuantity(resource, deficitAmount);
-                    MoneyCents maxPrice = new MoneyCents(AI_POWER_PRICE_CENTS_PER_WH); // MVP: Willing to pay up to AI price
+                    MoneyCents maxPrice = new MoneyCents(GetMarketPrice(resource)); // MVP: Willing to pay up to AI price
 
                     if (_exchange.TryBuy(deficit, maxPrice, out var offer))
                     {
@@ -193,6 +193,15 @@ namespace Sovereign.Sim
                     {
                         if (Ledger.TryDebitResource(Id, demand.Key, demand.Value))
                         {
+                            // NEW: Consumer Pays Treasury
+                            long price = GetMarketPrice(demand.Key);
+                            long costValue = demand.Value * price;
+                            var cost = new MoneyCents(costValue);
+
+                            // Force Debit Consumer (Allow Debt) -> Credit Treasury
+                            Ledger.ForceDebit(plot.OwnerId, cost);
+                            Ledger.Credit(TreasuryId, cost);
+
                             plot.Deliveries[demand.Key] = demand.Value;
                             if (!plot.Storage.ContainsKey(demand.Key)) plot.Storage[demand.Key] = 0;
                             plot.Storage[demand.Key] += demand.Value;
@@ -202,7 +211,28 @@ namespace Sovereign.Sim
                 plot.OnTick();
             }
 
-            // 4. Advance Tick
+            // 4. Publish Surplus to Global Exchange
+            foreach (var type in System.Enum.GetValues(typeof(ResourceType)).Cast<ResourceType>())
+            {
+                long balance = Ledger.GetResourceBalance(Id, type);
+                if (balance > 0)
+                {
+                    // List surplus. Price? Undercut AI slightly? Or match?
+                    // MVP: List at 1 cent below AI price to guarantee sales.
+                    long marketPrice = GetMarketPrice(type);
+                    long offerPrice = Math.Max(1, marketPrice - 1); 
+                    
+                    var offer = new ResourceOffer
+                    {
+                        SellerUniverseId = Id,
+                        Quantity = new ResourceQuantity(type, balance),
+                        PricePerUnit = new MoneyCents(offerPrice)
+                    };
+                    _exchange.ListOffer(offer);
+                }
+            }
+
+            // 5. Advance Tick
             long endTreasury = Ledger.GetBalance(TreasuryId).Value;
             NetTreasuryChangeLastTick = endTreasury - startTreasury;
             LastMarketSnapshot = _exchange.GetSnapshot(CurrentTick.Value);

@@ -27,20 +27,14 @@ namespace Sovereign.Sim.Serialization
         public Guid OwnerId { get; set; }
         public PlotState State { get; set; }
         public double Stability { get; set; }
-        public Dictionary<ResourceType, long> Storage { get; set; }
-        // Building Type?
-        // We need to know what Consumer/Producer is there.
-        // For MVP, if state is Active, we assume a building based on... wait.
-        // The Engine doesn't store "BuildingType" enum. It stores IConsumer/IProducer instances.
-        // We need to add a way to identify the building type to Plot or serialize the type name.
-        // Let's store the Type Name for now.
+        public Dictionary<string, long> Storage { get; set; } // Changed to string key
         public string BuildingType { get; set; }
     }
 
     public class LedgerStateDTO
     {
         public Dictionary<Guid, MoneyCents> MonetaryBalances { get; set; }
-        public Dictionary<ResourceType, Dictionary<Guid, long>> ResourceBalances { get; set; }
+        public Dictionary<string, Dictionary<Guid, long>> ResourceBalances { get; set; } // Changed to string key
     }
 
     public static class UniverseSerializer
@@ -55,7 +49,9 @@ namespace Sovereign.Sim.Serialization
                 Ledger = new LedgerStateDTO
                 {
                     MonetaryBalances = new Dictionary<Guid, MoneyCents>(universe.Ledger.MonetaryBalances),
-                    ResourceBalances = universe.Ledger.ResourceBalances.ToDictionary(k => k.Key, v => new Dictionary<Guid, long>(v.Value))
+                    ResourceBalances = universe.Ledger.ResourceBalances.ToDictionary(
+                        k => k.Key.ToString(), 
+                        v => new Dictionary<Guid, long>(v.Value))
                 }
             };
 
@@ -68,7 +64,7 @@ namespace Sovereign.Sim.Serialization
                     OwnerId = plot.OwnerId,
                     State = plot.State,
                     Stability = plot.Stability,
-                    Storage = new Dictionary<ResourceType, long>(plot.Storage),
+                    Storage = plot.Storage.ToDictionary(k => k.Key.ToString(), v => v.Value),
                     BuildingType = plot.Consumer?.GetType().Name ?? plot.Producer?.GetType().Name
                 };
                 state.Plots.Add(dto);
@@ -86,14 +82,12 @@ namespace Sovereign.Sim.Serialization
             var state = JsonSerializer.Deserialize<UniverseState>(json, options);
 
             var ledger = new Ledger();
-            ledger.LoadState(state.Ledger.MonetaryBalances, state.Ledger.ResourceBalances.ToDictionary(k => k.Key, v => new Dictionary<Guid, long>(v.Value)));
-
-            // We need a way to construct Universe with specific ID/TreasuryID/Tick?
-            // Universe constructor generates new IDs.
-            // We might need to add a "Load" method to Universe or a special constructor.
-            // For MVP, we'll create a new Universe and patch the fields (if we can expose them or add Load method).
-            // Let's add `LoadState` to Universe.
+            var resourceBalances = state.Ledger.ResourceBalances.ToDictionary(
+                k => Enum.Parse<ResourceType>(k.Key), 
+                v => new Dictionary<Guid, long>(v.Value));
             
+            ledger.LoadState(state.Ledger.MonetaryBalances, resourceBalances);
+
             var universe = new Universe(new GlobalExchange(), ledger);
             universe.LoadState(state.Id, state.CurrentTick, state.TreasuryId);
             
@@ -108,7 +102,14 @@ namespace Sovereign.Sim.Serialization
                     State = pDto.State,
                     Stability = pDto.Stability
                 };
-                foreach(var kvp in pDto.Storage) plot.Storage[kvp.Key] = kvp.Value;
+                
+                if (pDto.Storage != null)
+                {
+                    foreach(var kvp in pDto.Storage) 
+                    {
+                        plot.Storage[Enum.Parse<ResourceType>(kvp.Key)] = kvp.Value;
+                    }
+                }
 
                 // Restore Building
                 if (!string.IsNullOrEmpty(pDto.BuildingType))

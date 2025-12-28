@@ -6,6 +6,7 @@ using Sovereign.Core.Primitives;
 using System.Collections.Generic;
 using Sovereign.Sim.Serialization;
 using System.IO;
+using System;
 
 namespace SovereignState.Unity.SimBridge
 {
@@ -17,6 +18,8 @@ namespace SovereignState.Unity.SimBridge
     {
         private Universe _universe;
         public bool IsPaused { get; set; } = false;
+        
+        public event Action OnUniverseLoaded;
 
         // --- ISimDebugProvider Implementation ---
 
@@ -84,7 +87,18 @@ namespace SovereignState.Unity.SimBridge
         {
             // Initialize the Sovereign Engine Universe
             _universe = new Universe();
-            Debug.Log($"[SimulationRunner] Universe Initialized. Treasury: {TreasuryCents}");
+            
+            // Seed a default 16x16 grid
+            for (int x = 0; x < 16; x++)
+            {
+                for (int y = 0; y < 16; y++)
+                {
+                    _universe.AddPlot(new Plot { X = x, Y = y, State = PlotState.Empty });
+                }
+            }
+
+            Debug.Log($"[SimulationRunner] Universe Initialized with {_universe.Plots.Count} plots. Treasury: {TreasuryCents}");
+            OnUniverseLoaded?.Invoke();
         }
 
         public void SaveGame(string filename = "savegame.json")
@@ -104,6 +118,7 @@ namespace SovereignState.Unity.SimBridge
                 string json = File.ReadAllText(path);
                 _universe = UniverseSerializer.Deserialize(json);
                 Debug.Log($"Game loaded from {path}");
+                OnUniverseLoaded?.Invoke();
             }
             else
             {

@@ -1,0 +1,21 @@
+PS C:\Users\trulu\Field_OPs> engine/tools/build_engine.ps1
+=========================================
+  SOVEREIGN ENGINE BUILDER
+=========================================
+Solution: C:\Users\trulu\Field_OPs\engine\Sovereign.Engine.sln
+Target:   C:\Users\trulu\Field_OPs\Assets\Plugins\SovereignEngine
+Config:   Debug
+------------------------------------------
+Building solution...
+Restore succeeded with 1 warning(s) in 0.6s
+    C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\Sovereign.Mods.csproj : warning NU1903: Package 'System.Text.Json' 8.0.4 has a known high severity vulnerability, https://github.com/advisories/GHSA-8g4q-xg66-9fp4
+  Sovereign.Core succeeded (0.2s) → engine\src\Sovereign.Core\bin\Debug\netstandard2.1\Sovereign.Core.dll
+  Sovereign.Economy succeeded (0.1s) → engine\src\Sovereign.Economy\bin\Debug\netstandard2.1\Sovereign.Economy.dll
+  Sovereign.Mods succeeded with 1 warning(s) (0.1s) → engine\src\Sovereign.Mods\bin\Debug\netstandard2.1\Sovereign.Mods.dll
+    C:\Users\trulu\Field_OPs\engine\src\Sovereign.Mods\Sovereign.Mods.csproj : warning NU1903: Package 'System.Text.Json' 8.0.4 has a known high severity vulnerability, https://github.com/advisories/GHSA-8g4q-xg66-9fp4
+  Sovereign.Sim failed with 1 error(s) (0.4s)
+    C:\Users\trulu\Field_OPs\engine\src\Sovereign.Sim\Serialization\UniverseSerializer.cs(131,6): error CS1513: } expected
+
+Build failed with 1 error(s) and 2 warning(s) in 1.6s
+C:\Users\trulu\Field_OPs\engine\tools\build_engine.ps1 : Build failed! Fix compiler errors before proceeding.
+At line:1 char:1

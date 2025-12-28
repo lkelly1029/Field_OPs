@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using SovereignState.Unity.SimBridge;
 using System.Collections.Generic;
 
@@ -28,7 +29,7 @@ namespace SovereignState.Unity.DevTools
 
         void Update()
         {
-            if (Input.GetKeyDown(KeyCode.BackQuote)) // Tilde key
+            if (Keyboard.current != null && Keyboard.current.backquoteKey.wasPressedThisFrame) 
             {
                 _isVisible = !_isVisible;
             }

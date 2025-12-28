@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Sovereign.Mods")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+708aa0e2e844a43268d7e72067b4385e62ec26ce")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8c8c81af908a8f099fc64edf827c803735cda25a")]
 [assembly: System.Reflection.AssemblyProductAttribute("Sovereign.Mods")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Sovereign.Mods")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -38,6 +38,12 @@ namespace Sovereign.Economy
             return false;
         }
 
+        public void ForceDebit(Guid accountId, MoneyCents amount)
+        {
+            var balance = GetBalance(accountId);
+            _balances[accountId] = new MoneyCents(balance.Value - amount.Value);
+        }
+
         public long GetResourceBalance(Guid accountId, ResourceType type)
         {
             if (_resourceBalances.TryGetValue(type, out var balances) && balances.TryGetValue(accountId, out var balance))

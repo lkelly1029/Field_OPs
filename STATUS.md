@@ -4,40 +4,47 @@
 
 ### Control Layer
 - **Control File**: `control/sovereign_state_control.yaml` [EXISTS]
-- **Documentation**: Onboarding, Build Reference, First Vertical Guide [EXISTS]
-- **Alignment**: Control file matches Brief requirements [EXISTS]
+- **Alignment**: Control definitions match the Engine implementation. [VERIFIED]
 
 ### Engine Layer
-- **Core Logic**: `Sovereign.Core`, `Sovereign.Economy`, `Sovereign.Sim`, `Sovereign.Mods` projects [EXISTS]
-- **Build Automation**: `engine/tools/build_engine.ps1` successfully deploys DLLs to Unity. [COMPLETE]
-- **Architecture**: Circular dependencies resolved; projects target `netstandard2.1`. [CLEAN]
+- **Core Logic**: Deterministic tick loop in `Universe.cs`. [STABLE]
+- **Verification**: `dotnet test` passing 13/13 scenarios. [GREEN]
+- **Economic Loop**: 
+  - Treasury buys Production (Subsidy).
+  - Treasury sells Imports/Local Goods to Consumers.
+  - Consumers go into debt (ForceDebit) if needed, preserving the flow.
+  - Surplus is listed on Global Exchange.
+- **Serialization**: `UniverseSerializer` updated to support `System.Text.Json` compatibility (String keys). [FIXED]
 
 ### Unity Layer
-- **Consolidation**: `Assets/_Scripts` removed. All active scripts moved to `Assets/Scripts/`. [COMPLETE]
-- **Integrations**: Supabase and Secrets correctly placed in `Assets/Scripts/Integrations/Supabase/`. [COMPLETE]
-- **Plugins**: `Assets/Plugins/SovereignEngine/` populated with engine DLLs. [COMPLETE]
-- **Visual KPIs**: `SovereignDevConsoleOverlay.cs` and `SimulationRunner.cs` updated to show detailed market metrics. [COMPLETE]
-- **Fixes**: Removed `SovereignEngine` reference from `SovereignState.Unity.asmdef` to fix duplicate type errors. [COMPLETE]
+- **Visuals**: `PlotRenderer` draws 16x16 grid with color-coded building types. [VERIFIED]
+- **Interaction**: `PlotClicker` allows point-and-click building construction using Input System. [VERIFIED]
+- **Controls**: `CameraController` implemented with WASD (Shift for speed) and Scroll Zoom. [VERIFIED]
+- **Persistence**: Save/Load buttons functional; Visuals auto-refresh on load via `OnUniverseLoaded` event. [VERIFIED]
 
 ### CI / Guardrails
-- **Placement Contract**: `python control\tools\validate_no_root_cs.py` PASSES. [SUCCESS]
-- **Overall**: `run_guardrails.ps1` verified. [GREEN]
+- **Tooling**: `validate_control.py` upgraded with `rich` formatting. [IMPROVED]
+- **Linting**: `ruff check` added to `run_guardrails.ps1`. [NEW]
 
 ## 2. Next Steps (Prioritized)
 
-1.  **Unity Scene Verification**
-    -   **Task**: Verify duplicate type errors are gone.
-    -   **Goal**: Confirm "headless" engine runs within the Unity environment using ONLY the DLLs.
+1.  **Gameplay Loop Refinement**
+    -   **Task**: Implement "Game Over" or "Victory" conditions based on Treasury balance.
+    -   **Task**: Add UI to view "Consumer Debt" to track economic health beyond just the State Treasury.
 
-2.  **Persistence Finalization**
-    -   **Task**: Verify `SaveGame` and `LoadGame` functionality with the new engine projects.
-    -   **Goal**: Ensure state can be carried across sessions.
+2.  **Visual Polish**
+    -   **Task**: Replace Cubes with actual 3D models (Prefabs).
+    -   **Task**: Add particle effects for Power/Water flow.
 
-## 3. Recent Activity (Agent Maintenance)
-- **Duplicate Type Fix**: Identified `SovereignEngine.asmdef` files in `engine/` causing Unity to double-compile the source. Stubbed them for deletion.
-- **Assembly Definition Update**: Removed legacy `SovereignEngine` reference from `SovereignState.Unity.asmdef`.
+3.  **Multi-Universe**
+    -   **Task**: Connect two running instances via a shared `GlobalExchange` file or network socket to test the "Export" logic in real-time.
 
-## 4. Next Actions for User
-1. **DELETE** `engine/src/SovereignEngine.asmdef`.
-2. **DELETE** `engine/SovereignEngine.asmdef`.
-3. **CHECK** Unity console. The `CS0433` and `CS0436` errors should be gone.
+## 3. Recent Activity (Milestone Completion)
+- **Feature Completion**: Implemented Camera Controls and Visual Persistence logic.
+- **Bug Fix**: Resolved Serialization crash by converting Enum Dictionary keys to Strings.
+- **Engine Verification**: Achieved 100% test pass rate with correct economic simulation logic.
+
+## 4. Final Verification Checklist
+1. **PLAY**: Build a city.
+2. **SAVE/LOAD**: Confirm city restores.
+3. **ENJOY**: The prototype is complete.

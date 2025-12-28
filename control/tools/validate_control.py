@@ -1,11 +1,15 @@
 import yaml
 import sys
 import os
+from rich.console import Console
+from rich.panel import Panel
+
+console = Console()
 
 def validate_control_file(file_path):
-    print(f"Validating {file_path}...")
+    console.print(f"[bold blue]Validating control file:[/bold blue] {file_path}")
     if not os.path.exists(file_path):
-        print(f"ERROR: File not found: {file_path}")
+        console.print(f"[bold red]ERROR:[/bold red] File not found: {file_path}")
         return False
     
     try:
@@ -16,14 +20,14 @@ def validate_control_file(file_path):
         missing_keys = [key for key in required_keys if key not in data]
         
         if missing_keys:
-            print(f"ERROR: Missing required keys: {missing_keys}")
+            console.print(f"[bold red]ERROR:[/bold red] Missing required keys: {missing_keys}")
             return False
             
-        print("SUCCESS: Control file has valid structure.")
+        console.print(Panel("[bold green]SUCCESS:[/bold green] Control file has valid structure.", expand=False))
         return True
         
     except Exception as e:
-        print(f"ERROR: Failed to parse YAML: {e}")
+        console.print(f"[bold red]ERROR:[/bold red] Failed to parse YAML: {e}")
         return False
 
 if __name__ == "__main__":
